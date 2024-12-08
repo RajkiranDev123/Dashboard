@@ -1,0 +1,54 @@
+Setup :
+ npx create-react-app nameOfProject (crud)
+              or 
+ npm create vite@latest nameOfProject
+
+ React 
+ JavaScript
+ 
+ cd crud
+ npm install
+ npm run dev
+
+ //////////////////////////////////////////////////////////////////////////////////
+
+Extensions :
+ ES7 + React/Redux/React-Native snippets  ( rafce)
+ Auto Complete Tag
+
+Packages :
+
+ npm i react-router-dom axios moment
+ npm install react-bootstrap bootstrap
+ import 'bootstrap/dist/css/bootstrap.min.css'; (put in app.jsx)
+
+hmr (features offered by bundlers (webpack or vite )) : hot module replacement : real time update of modules without reloading entirely
+
+babel vs webpack :
+
+    webpack or vite : bundle and optimize the code. (bundler)
+    babel or esbuild  : transpile the js code & making it compatible with the older browser. (transpiler)
+
+npm i react-select
+
+npm i react-toastify (for notifications)
+import 'react-toastify/dist/ReactToastify.css';
+
+//font awesome cdn link : 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" 
+ integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" 
+ crossorigin="anonymous" 
+ referrerpolicy="no-referrer" />
+
+ material ui :
+ npm install @mui/material @emotion/react @emotion/styled
+ npm install @mui/x-charts
+
+calendar : 
+npm i react-daterange-picker
+
+npm i react-qr-code --force
+npm i html2canvas jspdf --force
+
+
+ 

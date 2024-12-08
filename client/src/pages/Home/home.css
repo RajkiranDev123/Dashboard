@@ -1,0 +1,11 @@
+@media only screen and (max-width: 500px) {
+    .export,.filter_gender,.filter_newold,.filter_status,.search,.add_btn {
+   
+      margin: 4px auto auto auto;
+      
+      /* background: green; */
+      /* background: red; */
+    }
+  }
+
+  /* @media only screen and () : a o s a p */

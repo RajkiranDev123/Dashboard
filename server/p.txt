@@ -1,0 +1,26 @@
+npm init -y
+
+npm i express dotenv cors moment
+
+ "type": "module",
+
+ "dev":"nodemon app.js",
+ "start":"node app.js"
+
+npm install --save-dev nodemon (sd 21)
+
+npm i mongoose validator
+
+npm i multer
+
+
+npm i fast-csv
+npm i cloudinary
+
+github :
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/RajkiranDev123/merncrud1.git
+git push -u origin main
