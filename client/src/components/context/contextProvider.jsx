@@ -4,14 +4,14 @@ import React, { useState, createContext } from "react"
 export const addData = createContext()
 export const updateData = createContext()
 
-
+//wrapper
 const ContextProvider = ({ children }) => {
-    const [useradd, setUseradd] = useState("")
+    const [userAdd, setUserAdd] = useState("")
     const [update, setUpdate] = useState("")
 
     return (
 
-        <addData.Provider value={{ useradd, setUseradd }}>
+        <addData.Provider value={{ userAdd, setUserAdd }}>
             <updateData.Provider value={{ update, setUpdate }}>
 
                 {children}

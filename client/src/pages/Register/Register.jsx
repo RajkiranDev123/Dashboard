@@ -27,7 +27,7 @@ const Register = () => {
   const [preview, setPreview] = useState("")
 
   const navigate = useNavigate()
-  const { useradd, setUseradd } = useContext(addData)
+  const { userAdd, setUserAdd } = useContext(addData)
 
   const options = [
     { value: "Active", label: "Active" },
@@ -39,11 +39,12 @@ const Register = () => {
     setInputData({ ...inputData, [name]: value })
   }
   const setStatusValue = (e) => {
+    // e= { value: "Active", label: "Active" },
     setStatus(e.value)
   }
   const setProfileImg = (e) => {
-    console.log("img=>", e.target.files)
-    //A FileList is an array-like object, type is object
+    console.log("img=>", e.target.files[0])
+    //A FileList is an array-like object,data type is object
     setImage(e.target.files[0])
   }
   const submitUserData = async (e) => {
@@ -67,9 +68,9 @@ const Register = () => {
     } else if (mobile.length < 10) {
       toast.error("10 digits is required!")
     } else if (gender == "") {
-      toast.error("gender is required!")
+      toast.error("Gender is required!")
     } else if (status == "") {
-      toast.error("status is required!")
+      toast.error("Status is required!")
     } else if (location == "") {
       toast.error("Location is required!")
     } else if (image == "") {
@@ -89,18 +90,20 @@ const Register = () => {
 
       console.log("Form Data before submit ==>", data)
 
-      const config = {"Content-Type": "multipart/form-data"}
+      const config = { "Content-Type": "multipart/form-data" }
 
       const response = await registerUser(data, config)
       console.log("response after submit ==>", response)
-      if (response.status === 201) {
+      if (response?.status === 201) {
         setInputData({ ...inputData, fname: "", lname: "", email: "", mobile: "", gender: "", location: "" })
-        setUseradd(response.data)
+        setUserAdd(response?.data)
+
         setStatus("")
         setImage("")
+
         navigate("/")
       } else {
-        toast.error(response.response.data.message)
+        toast.error(response?.response?.data?.message)
       }
     }
   }
@@ -119,7 +122,7 @@ const Register = () => {
       <Headers headerName="Register" />
 
       <ToastContainer />
-      
+
       {/* container */}
       <div style={{ border: "0px dashed red" }} className="container mt-1 p-4">
 
@@ -130,7 +133,7 @@ const Register = () => {
         <Card style={{ border: "0px solid blue" }} className='shadow mt-3 p-3'>
 
           {/* profile pic */}
-          <div className="profile_div text-center">
+          <div className="profile_div text-center m-3">
             <img src={preview ? preview : "/vite.svg"} alt='img1' />
           </div>
 
@@ -186,14 +189,14 @@ const Register = () => {
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicStatus">
                 <Form.Label>Select Your Status : {status}</Form.Label>
-                <Select placeholder="Select your status" options={options} value={status} onChange={setStatusValue} />
+                <Select placeholder={status} options={options} value={status} onChange={setStatusValue} />
               </Form.Group>
 
               {/* image */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicProfile">
                 <Form.Label>Select Your Profile Image</Form.Label>
                 <Form.Control type="file" name="user_profile" onChange={setProfileImg} placeholder="Profile" />
-                
+
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicLocation">
@@ -209,7 +212,10 @@ const Register = () => {
             </Row>
           </Form>
         </Card>
+          {/* card ends*/}
       </div>
+      {/* container ends*/}
+
     </>
   )
 }

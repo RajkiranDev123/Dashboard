@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom'
 import Tables from "../../components/Tables/Tables"
 
 import Spiner from '../../components/Spiner/Spiner'
+
+//import the contexts (context has states)
 import { addData, updateData } from '../../components/context/contextProvider'
 
 import { fetchAllUsers, userDelete, exportToCsv } from "../../services/ApiRequests"
@@ -31,7 +33,8 @@ const Home = () => {
   const [showSpin, setShowSpin] = useState(true)
   const navigate = useNavigate()
 
-  const { useradd, setUseradd } = useContext(addData)
+  //use the contexts
+  const { userAdd, setUserAdd } = useContext(addData)
   const { update, setUpdate } = useContext(updateData)
   //      use    &    set
 
@@ -55,21 +58,15 @@ const Home = () => {
   const getAllUsers = async () => {
     console.log("getAllUsers called")
     console.log("dr", dateRange)
-    const config = {
-
-
-      "date-range": dateRange
-
-    }
+    const config = { "date-range": dateRange }
     const response = await fetchAllUsers(search, gender, status, sort, page, config)
-    console.log("get all users==>", response.data)
-    if (response.status == 200) {
-      setUserData(response?.data.usersData)
-      setPageCount(response.data.pagination.pageCount)
+    console.log("get all users==>", response)
+    if (response?.status == 200) {
+      setUserData(response?.data?.usersData)
+      setPageCount(response?.data?.pagination?.pageCount)
     } else {
       console.log("failed to fetch")
     }
-
   }
 
   const deleteUser = async (id) => {
@@ -92,23 +89,13 @@ const Home = () => {
     //debouncing
     let timer1 = setTimeout(() => {
       getAllUsers()
-      //it will re render and all values will again come
-      // setSearch("") 
     }, 2000)
-
     return () => {
-      console.log("clean up called on  dependencies change and unmounting")
+      console.log("clean up called on when dependencies change and unmounting")
       clearTimeout(timer1)
     }
-
   }, [search])
 
-  useEffect(() => {
-    //automatically unmount and remount every component : strict mode
-    return () => console.log("2nd cup")
-    //////////// execute console.log("2nd cup") not return ! (no need {} for single stat)
-
-  }, [])
 
   async function exportcsv() {
     const response = await exportToCsv()
@@ -149,8 +136,8 @@ const Home = () => {
   }, [gender, status, sort, dateRange, page])
   return (<>
     {
-      useradd ?
-        <Alert variant='success' onClose={() => setUseradd("")} dismissible>{useradd.fname} is added!</Alert> : ""
+      userAdd ?
+        <Alert variant='success' onClose={() => setUserAdd("")} dismissible>{userAdd.fname} is added!</Alert> : ""
     }
     {
       update ?
@@ -192,7 +179,7 @@ const Home = () => {
         {/* search_add  ends*/}
 
         {/* charts */}
-        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "2px solid brown", borderRadius: 4 }}>
+        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid brown", borderRadius: 4 }}>
           <Suspense fallback={<p>wait...........</p>}>
             <BasicBars userData={userData} />
 
@@ -200,6 +187,8 @@ const Home = () => {
           </Suspense>
           <BasicBars2 userData={userData} />
         </div>
+        {/* charts ends */}
+
 
         {/*export & filters :  export,gender,value,status */}
         <Row className='m-2 p-2' style={{ border: "2px solid blue", borderRadius: 4 }}>
