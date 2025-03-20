@@ -1,4 +1,4 @@
-import express, { Router } from "express"
+import express from "express"
 // import { Router } from "express"
 import {
     userRegister, getAllUsers, getSingleUser, editUser,
@@ -12,10 +12,13 @@ const router = new express.Router()
 //userRegister
 router.post("/user/register", upload.single("user_profile"), userRegister)
 
+//get all users
 router.get("/user/getAllUsers", getAllUsers)
 
+//get a single user
 router.get("/user/:id", getSingleUser)
 
+//update a user
 router.put("/edit/user/:id", upload.single("user_profile"), editUser)
 
 router.delete("/delete/user/:id", deleteUser)

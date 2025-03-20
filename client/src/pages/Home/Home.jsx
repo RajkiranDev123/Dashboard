@@ -55,24 +55,12 @@ const Home = () => {
     navigate("/register")
   }
 
-  const getAllUsers = async () => {
-    console.log("getAllUsers called")
-    console.log("dr", dateRange)
-    const config = { "date-range": dateRange }
-    const response = await fetchAllUsers(search, gender, status, sort, page, config)
-    console.log("get all users==>", response)
-    if (response?.status == 200) {
-      setUserData(response?.data?.usersData)
-      setPageCount(response?.data?.pagination?.pageCount)
-    } else {
-      console.log("failed to fetch")
-    }
-  }
+
 
   const deleteUser = async (id) => {
     const response = await userDelete(id)
 
-    if (response.status == 200) {
+    if (response?.status == 200) {
       getAllUsers()
     } else {
       toast.error("error")
@@ -85,21 +73,9 @@ const Home = () => {
     setSearch("")
   }
 
-  useEffect(() => {
-    //debouncing
-    let timer1 = setTimeout(() => {
-      getAllUsers()
-    }, 2000)
-    return () => {
-      console.log("clean up called on when dependencies change and unmounting")
-      clearTimeout(timer1)
-    }
-  }, [search])
-
-
   async function exportcsv() {
     const response = await exportToCsv()
-    if (response.status == 200) {
+    if (response?.status == 200) {
       window.open(response.data.downloadUrl, "blank")
     }
 
@@ -123,11 +99,41 @@ const Home = () => {
         return page + 1
       }
     )
+  }
 
+  const getAllUsers = async () => {
 
+    const config = { "date-range": dateRange,"Content-Type": "application/json" }
+    const response = await fetchAllUsers(search, gender, status, sort, page, config)
+
+    if (response?.status == 200) {
+      setUserData(response?.data?.usersData)
+      setPageCount(response?.data?.pagination?.pageCount)
+    } else {
+      console.log("failed to fetch")
+    }
   }
 
   useEffect(() => {
+    let timer1
+
+      console.log("ue 1")
+      //debouncing
+      timer1 = setTimeout(() => {
+        getAllUsers()
+      }, 2000)
+
+    return () => {
+      //The cleanup function will be run every time the hook re-runs ,
+      // and also when the component unmounts.
+      console.log("clean up called on when dependencies change or useEffect hook re-runs and unmounting")
+      clearTimeout(timer1)
+    }
+  }, [search])
+
+  useEffect(() => {
+    console.log("ue 2")
+
     getAllUsers()
     setTimeout(() => {
       setShowSpin(false)
@@ -151,7 +157,8 @@ const Home = () => {
       <div className="main_div p-2" style={{ border: "0px solid blue" }}>
 
         {/* search & add */}
-        <div className="search_add m-2 p-2 d-flex justify-content-between flex-wrap" style={{ border: "0px solid violet", borderRadius: 4 }}>
+        <div className="search_add m-2 p-2 d-flex justify-content-between flex-wrap" 
+        style={{ border: "0px solid violet", borderRadius: 4 ,background:"#F5F5DC"}}>
 
           {/* search */}
           <div className="search col-sm-12 col-md-12 col-lg-6 d-flex justify-content-start">
@@ -165,7 +172,7 @@ const Home = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
               <Button variant='success' className='search_button me-2'>Search</Button>
-              <Button onClick={() => { setSearch(""), clearInputs() }} variant='danger' className='search_button'>Clear</Button>
+              <Button onClick={() => { clearInputs() }} variant='danger' className='search_button'>Clear</Button>
             </Form>
           </div>
           {/* search ends*/}
@@ -179,7 +186,8 @@ const Home = () => {
         {/* search_add  ends*/}
 
         {/* charts */}
-        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid brown", borderRadius: 4 }}>
+        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap" 
+        style={{ border: "0px solid brown", borderRadius: 4 ,background:"#FAF9F6"}}>
           <Suspense fallback={<p>wait...........</p>}>
             <BasicBars userData={userData} />
 
@@ -191,7 +199,7 @@ const Home = () => {
 
 
         {/*export & filters :  export,gender,value,status */}
-        <Row className='m-2 p-2' style={{ border: "2px solid blue", borderRadius: 4 }}>
+        <Row className='m-2 p-2' style={{ border: "0px solid blue", borderRadius: 4 ,background:"#FAF9F6"}}>
           <div className="filters_div mt-5 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid green" }}>
 
             {/* export */}
@@ -297,7 +305,7 @@ const Home = () => {
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "center", background: "", width: "100%", padding: 5, alignItems: "center", marginTop: 3, borderRadius: 4 }}>
               <div style={{ border: "1px solid black", borderRadius: 4, padding: 2 }}>
-                <p style={{ fontWeight: "bold", marginLeft: 26 }}>Date-Range :</p>
+                <p style={{ fontWeight: "bold", marginLeft: 26 }}>Filter By Date-Range :</p>
 
                 <DateRange setDateRange={setDateRange} />
               </div>

@@ -53,8 +53,10 @@ const usersSchema = new mongoose.Schema({
         trim: true
     },
     dateCreated: Date,
+    // { type: Date, default: Date.now() }
   
 
 })
+////////////model name
 export const users = new mongoose.model("users", usersSchema)
 //////////////////////////////////////// collection name

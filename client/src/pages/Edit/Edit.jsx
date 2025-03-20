@@ -18,18 +18,11 @@ import { fetchSingleUser, editUser } from '../../services/ApiRequests';
 import { BASE_URL } from '../../services/ApiEndPoints';
 import { updateData } from "../../components/context/contextProvider"
 
-
-
 const Edit = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
-
+  const { id } = useParams()//<Route path='/edit/:id' element={<Edit />} />
   const { update, setUpdate } = useContext(updateData)
   // set the value of context here and used in home
-
-
-
-
   const [inputData, setInputData] = useState({
     fname: "",
     lname: "",
@@ -43,42 +36,31 @@ const Edit = () => {
   const [status, setStatus] = useState("Active")
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
+  const [imgTemp, setImageTemp] = useState("")
+
 
   const [imgData, setImgData] = useState("")
 
-
-
-
-  const options = [
-    { value: "Active", label: "Active" },
-    { value: "InActive", label: "InActive" },
-
-  ]
+  const options = [{ value: "Active", label: "Active" }, { value: "InActive", label: "InActive" }]
 
   const setInputValue = (e) => {
-    // console.log("e =>",e)
     const { name, value } = e.target
-    //name => fname 
-    //[name] is fname
     setInputData({ ...inputData, [name]: value })
     console.log(inputData)
-
-
   }
 
   // console.log(inputData) //dont use it here otherwise it will output if you set image or status
 
   //status set
   const setStatusValue = (e) => {
+    //e ={ value: "Active", label: "Active" }
     setStatus(e.value)
   }
 
   const setProfileImg = (e) => {
     console.log("img=>", e.target.files[0])
-
     setImage(e.target.files[0])
   }
-
 
   const submitUserData = async (e) => {
     e.preventDefault()
@@ -119,48 +101,42 @@ const Edit = () => {
       data.append("user_profile", image || imgData)
       data.append("location", location)
       console.log("data", data)
-      const config = {
-        "Content-Type": "multipart/form-data"
-      }
+      const config = { "Content-Type": "multipart/form-data","img-name":imgTemp?.split("/")}
       const response = await editUser(id, data, config)
-      if (response.status == 200) {
-        setUpdate(response.data)
+      if (response?.status == 200) {
+        setUpdate(response?.data)
         navigate("/")
       }
     }
 
   }
 
-
-
-  const getUserData = async () => {
+  const getSingleUserData = async () => {
     const response = await fetchSingleUser(id)
+    console.log(response.data)
 
-    if (response.status == 200) {
-      setInputData(response.data)
-      setStatus(response.data.status)
-      setImgData(response.data.profile)
+    if (response?.status == 200) {
+      setInputData(response?.data)
+      setStatus(response?.data?.status)
+      setImgData(response?.data?.profile)
+      setImageTemp(response?.data?.profile)
     } else {
       console.log("error")
     }
   }
 
   useEffect(() => {
-    getUserData()
-    // new ue because while changing image  it will disturb the edited data by calling getUserdata()
-
-
+    getSingleUserData()
   }, [])
 
   useEffect(() => {
     // instead of putting this in ue you can create a function to put the below logic when uploading image
     if (image) {
       setImgData("")
-      let uri = URL.createObjectURL(image)
-      console.log(uri)
+      let objectUrl = URL.createObjectURL(image)
+      console.log(objectUrl)
       setPreview(URL.createObjectURL(image))
     }
-
   }, [image])
 
   return (
@@ -173,32 +149,33 @@ const Edit = () => {
         <Card style={{ border: "0px solid blue" }} className='shadow mt-3 p-3'>
 
           <div className="profile_div text-center">
-            <img width={25} height={25} src={preview ? preview : `${BASE_URL}/${imgData}`} alt='img1' />
+            <img width={25} height={25} src={preview ? preview : imgData} alt='img1' />
           </div>
 
           <Form>
             <Row>
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicFirstName">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" value={inputData.fname} onChange={setInputValue} placeholder="Enter First Name" name='fname' />
+                {/* ?. is optional chaining : the expression short circuits and evaluates to undefined instead of throwing an error */}
+                <Form.Control type="text" value={inputData?.fname} onChange={setInputValue} placeholder="Enter First Name" name='fname' />
 
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicLastName">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" value={inputData.lname} onChange={setInputValue} placeholder="Enter Last Name" name='lname' />
+                <Form.Control type="text" value={inputData?.lname} onChange={setInputValue} placeholder="Enter Last Name" name='lname' />
 
               </Form.Group>
 
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" value={inputData.email} onChange={setInputValue} placeholder="Email" name='email' />
+                <Form.Control type="email" value={inputData?.email} onChange={setInputValue} placeholder="Email" name='email' />
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicMobile">
                 <Form.Label>Mobile</Form.Label>
-                <Form.Control type="number" value={inputData.mobile} onChange={setInputValue} placeholder="Mobile" name='mobile' />
+                <Form.Control type="number" value={inputData?.mobile} onChange={setInputValue} placeholder="Mobile" name='mobile' />
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicGender">
@@ -209,8 +186,7 @@ const Edit = () => {
                   name="gender"
                   value={"Male"}
                   onChange={setInputValue}
-                  checked={inputData.gender == "Male" ? true : false}
-
+                  checked={inputData?.gender == "Male" ? true : false}
                 />
                 <Form.Check
                   type={"radio"}
@@ -218,35 +194,23 @@ const Edit = () => {
                   name="gender"
                   value={"Female"}
                   onChange={setInputValue}
-                  checked={inputData.gender == "Female" ? true : false}
-
-
+                  checked={inputData?.gender == "Female" ? true : false}
                 />
-
-
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicStatus">
                 <Form.Label>Select Your Status : {status}</Form.Label>
                 <Select options={options} value={status} onChange={setStatusValue} />
-
-
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicProfile">
                 <Form.Label>Select Your Profile Image</Form.Label>
                 <Form.Control type="file" name="user_profile" onChange={setProfileImg} placeholder="Profile" />
-
-
-
               </Form.Group>
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicLocation">
                 <Form.Label>Location</Form.Label>
-                <Form.Control onChange={setInputValue} value={inputData.location} type="text" placeholder="Location" name="location" />
-
-
-
+                <Form.Control onChange={setInputValue} value={inputData?.location} type="text" placeholder="Location" name="location" />
               </Form.Group>
 
               <Button variant="primary" type="submit" onClick={submitUserData}>
@@ -258,12 +222,9 @@ const Edit = () => {
           </Form>
 
         </Card>
+        {/* ToastContainer */}
         <ToastContainer />
-
-
       </div>
-
-
     </>
   )
 }

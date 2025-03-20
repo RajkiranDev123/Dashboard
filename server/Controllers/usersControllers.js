@@ -2,11 +2,11 @@ import moment from "moment" //A JavaScript date library/package for formatting d
 import { users } from "../models/usersSchema.js"
 import csv from "fast-csv"
 import fs from "fs"
-import { uploadOnCloudinary } from "../utilities/cloudinary.js"
+import { uploadOnCloudinary, removeFromCloudinary } from "../utilities/cloudinary.js"
 
 export const userRegister = async (req, res) => {
 
-    const file = req.file.filename
+    const file = req?.file?.filename
 
     const { fname, lname, email, mobile, gender, location, status } = req.body
 
@@ -28,7 +28,7 @@ export const userRegister = async (req, res) => {
             }
 
             const userData = new users({
-                fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url||"", dateCreated
+                fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || "", dateCreated
             })
             // before saving validation of schema happens, if error occurs it will be passed to the catch block
             await userData.save()
@@ -42,23 +42,20 @@ export const userRegister = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const getAllUsers = async (req, res) => {
-    // console.log("getAllUsers import.meta.dirname", import.meta.dirname)
-    // console.log("getAllUsers import.meta.filename", import.meta.filename)
-    // console.log("getAllUsers process.cwd()", process.cwd())
-    // query: { search: 's', gender: 'All', status: 'InActive', sort: 'new' } & params: {}
     const search = req.query.search || ""
     const gender = req.query.gender || ""
     const status = req.query.status || ""
     const sort = req.query.sort || ""
     const dateRange = req.headers["date-range"]
+
     let start = dateRange?.split("--")[0] + "T00:00:00Z"
     let end = dateRange?.split("--")[1] + "T23:59:59Z"
+
     const page = req.query.page || 1
     const ITEM_PER_PAGE = 4
 
-    const query = {
-        fname: { $regex: search, $options: "i" }
-    }
+    const query = { fname: { $regex: search, $options: "i" } }
+
     if (gender !== "All") {
         query.gender = gender
     }
@@ -70,58 +67,80 @@ export const getAllUsers = async (req, res) => {
     }
     try {
         const count = await users.countDocuments(query)
-        const skip = (page - 1) * ITEM_PER_PAGE
+        const skip = (page - 1) * ITEM_PER_PAGE  //for page no 2: (2-1)*4 ==> 1*4=4 , skip 4 docs & get from 5th
+        const pageCount = Math.ceil(count / ITEM_PER_PAGE)//pageCount is total pages 8/4=2 pages
+
+        console.log(query)
         const usersData = await users.find(query).skip(skip).limit(ITEM_PER_PAGE)
-        // .sort({ dateCreated: sort == "new" ? -1 : 1 })
-        const pageCount = Math.ceil(count / ITEM_PER_PAGE)//pageCount is total pages
-        res.status(200).json({
+            .sort({ dateCreated: sort == "new" ? -1 : 1 })
+
+        return res.status(200).json({
             pagination: {
                 count, pageCount
             },
             usersData
         })
     } catch (error) {
-        res.status(500).json(error)
         console.log(error.message)
+
+        return res.status(500).json(error)
     }
 }
 
 
 export const getSingleUser = async (req, res) => {
     const { id } = req.params
-    console.log(id)
+
     try {
         const usersData = await users.findOne({ _id: id })
         res.status(200).json(usersData)
 
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error.message)
     }
 }
 
+//edit and update user /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const editUser = async (req, res) => {
     const { id } = req.params
+    const img = req.headers["img-name"]?.split(",")[7]?.split(".")[0]
+    console.log("img-name", img)
     const { fname, lname, email, mobile, gender, location, status, user_profile } = req.body
     const file = req.file ? req.file.filename : user_profile
+
     //data.append("user_profile", image)
     const dateUpdated = moment(new Date()).format("YY-MM-DD hh:mm:ss")
-    try {
-        const updateUser = await users.findByIdAndUpdate({ _id: id }, {
+    try {  //img-Wed-Dec-11-2024-115928_f.jpg //http://res.cloudinary.com/dtwkdhzni/image/upload/v1733576939/sypprhlsolkqiylukroz.jpg
+        let uploadImage
+        if (file.startsWith('img')) {
+            console.log(true)
+            uploadImage = await uploadOnCloudinary(process.cwd() + "/uploads/" + file)
+            if (!uploadImage) {
+                return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
+            }
 
-            fname, lname, email, mobile, gender, location, status, profile: file, dateUpdated
-        }, {
-            new: true
+            const removeImage = await removeFromCloudinary(img)
+            console.log("test", removeImage)
+
+        } else {
+            console.log(false)
         }
+
+        const updateUser = await users.findByIdAndUpdate(
+            { _id: id },
+            { fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || file, dateUpdated },
+            { new: true }
         )
         await updateUser.save()
-        res.status(200).json(updateUser)
+        return res.status(200).json(updateUser)
 
     } catch (error) {
-        res.status(500).json(error.message)
-        console.log(error)
+        console.log(error.message)
+        return res.status(500).json(error.message)
     }
 }
 
+///////////////////////////////////////// end of edit and update user /////////////////////////////////////////////////////
 
 export const deleteUser = async (req, res) => {
     const { id } = req.params

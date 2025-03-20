@@ -1,14 +1,12 @@
 import multer from "multer"
-//storage
-//Multer adds a file object to the request object. (req.file.filename)
-const storage = multer.diskStorage({
 
+//Multer adds a file object to the request object. (req.file.filename)
+const storage = multer.diskStorage(
+    {
     destination: (req, file, callback) => {
         callback(null, "./uploads")
     },
-
-
-    // add filename prop to req.file object
+    // add filename property to req.file object ==> req.file={filename:"M.jpg"}
     filename: (req, file, callback) => {
         //Date. now() returns the number of milliseconds since January 1, 1970.
         const noOfMilliseconds = Date.now();
@@ -18,7 +16,8 @@ const storage = multer.diskStorage({
         const filename = `img-${merge}_${file.originalname}`
         callback(null, filename)
     },
-})
+}
+)
 
 //filter
 const filefilter = (req, file, callback) => {
