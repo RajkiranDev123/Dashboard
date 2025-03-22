@@ -5,16 +5,13 @@ import Table from "react-bootstrap/Table"
 import Dropdown from "react-bootstrap/Dropdown"
 
 import "./table.css"
-import { BASE_URL } from '../../services/ApiEndPoints'
-import { NavLink, useNavigate } from "react-router-dom"
+
+import {  useNavigate } from "react-router-dom"
 
 import { changeStatus } from '../../services/ApiRequests'
 import { ToastContainer, toast } from 'react-toastify';
 
 import Pagin from '../Pagination/Pagination'
-
-
-
 
 const Tables = ({ userData, deleteUser, getAllUsers,
   handleNext, handlePrevious, page, pageCount, setPage }) => {
@@ -38,6 +35,7 @@ const Tables = ({ userData, deleteUser, getAllUsers,
         <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 300 }}>
 
           <Table >
+            {/* thead */}
             <thead>
               <tr>
                 <th>ID</th>
@@ -47,7 +45,6 @@ const Tables = ({ userData, deleteUser, getAllUsers,
                 <th>Gender</th>
                 <th>Status</th>
                 <th>Profile</th>
-
                 <th>Action</th>
               </tr>
             </thead>
@@ -64,6 +61,7 @@ const Tables = ({ userData, deleteUser, getAllUsers,
                       <td>{element?.email}</td>
                       <td>{element?.gender}</td>
 
+                      {/* status */}
                       <td>
                         <Dropdown className='text-center'>
 
@@ -79,14 +77,14 @@ const Tables = ({ userData, deleteUser, getAllUsers,
 
                         </Dropdown>
                       </td>
+
+                      {/* image */}
                       <td>
                         {/* <img width={25} height={25} style={{borderRadius:"50%"}} src={`${BASE_URL}/uploads/${element.profile}`} alt='img' /> */}
                         <img width={25} height={25} style={{ borderRadius: "50%" }} src={element?.profile} alt='img' />
-
-
-
-
                       </td>
+
+                      {/* actions */}
                       <td>
                         <Dropdown className='text-center'>
 

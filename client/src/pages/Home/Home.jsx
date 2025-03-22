@@ -7,9 +7,6 @@ import Button from "react-bootstrap/Button"
 import Dropdown from "react-bootstrap/Dropdown"
 import Row from "react-bootstrap/Row"
 import Alert from "react-bootstrap/Alert"
-
-
-
 import { useNavigate } from 'react-router-dom'
 
 import Tables from "../../components/Tables/Tables"
@@ -39,8 +36,6 @@ const Home = () => {
   //      use    &    set
 
   const [userData, setUserData] = useState([])
-
-
   const [search, setSearch] = useState("")
   const [gender, setGender] = useState("All")
   const [status, setStatus] = useState("All")
@@ -49,17 +44,11 @@ const Home = () => {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(0)
 
-
-
   const goToRegister = () => {
     navigate("/register")
   }
-
-
-
   const deleteUser = async (id) => {
     const response = await userDelete(id)
-
     if (response?.status == 200) {
       getAllUsers()
     } else {
@@ -69,7 +58,6 @@ const Home = () => {
   }
 
   const clearInputs = async () => {
-
     setSearch("")
   }
 
@@ -78,7 +66,6 @@ const Home = () => {
     if (response?.status == 200) {
       window.open(response.data.downloadUrl, "blank")
     }
-
   }
 
   //pagin
@@ -89,7 +76,6 @@ const Home = () => {
         return page - 1
       }
     )
-
   }
 
   const handleNext = () => {
@@ -103,7 +89,7 @@ const Home = () => {
 
   const getAllUsers = async () => {
 
-    const config = { "date-range": dateRange,"Content-Type": "application/json" }
+    const config = { "date-range": dateRange, "Content-Type": "application/json" }
     const response = await fetchAllUsers(search, gender, status, sort, page, config)
 
     if (response?.status == 200) {
@@ -116,15 +102,13 @@ const Home = () => {
 
   useEffect(() => {
     let timer1
-
-      console.log("ue 1")
-      //debouncing
-      timer1 = setTimeout(() => {
-        getAllUsers()
-      }, 2000)
+    //debouncing
+    timer1 = setTimeout(() => {
+      getAllUsers()
+    }, 2000)
 
     return () => {
-      //The cleanup function will be run every time the hook re-runs ,
+      //The cleanup function will be run every time the hook re-runs ,not on initial render
       // and also when the component unmounts.
       console.log("clean up called on when dependencies change or useEffect hook re-runs and unmounting")
       clearTimeout(timer1)
@@ -132,8 +116,6 @@ const Home = () => {
   }, [search])
 
   useEffect(() => {
-    console.log("ue 2")
-
     getAllUsers()
     setTimeout(() => {
       setShowSpin(false)
@@ -152,13 +134,13 @@ const Home = () => {
 
     <Headers headerName="Dashboard" />
     {/* container */}
-    <div className="container p-2 mt-2" style={{ border: "0px solid red" }}>
+    <div className=" p-2 " style={{ border: "0px solid red", background: "#2c3968" }}>
       {/* main */}
       <div className="main_div p-2" style={{ border: "0px solid blue" }}>
 
         {/* search & add */}
-        <div className="search_add m-2 p-2 d-flex justify-content-between flex-wrap" 
-        style={{ border: "0px solid violet", borderRadius: 4 ,background:"#F5F5DC"}}>
+        <div className="search_add m-2 p-2 d-flex justify-content-between flex-wrap"
+          style={{ border: "0px solid violet", borderRadius: 4, background: "" }}>
 
           {/* search */}
           <div className="search col-sm-12 col-md-12 col-lg-6 d-flex justify-content-start">
@@ -177,21 +159,19 @@ const Home = () => {
           </div>
           {/* search ends*/}
 
-          {/* add */}
+          {/* add button*/}
           <div className="add_btn col-sm-12 col-md-12 col-lg-6 d-flex justify-content-end">
             <Button variant='primary' onClick={goToRegister} className='add_button'><i className='fa-solid fa-plus'></i>Add User</Button>
           </div>
-          {/* add ends*/}
+          {/* add button ends*/}
         </div>
-        {/* search_add  ends*/}
+        {/* search & add  ends*/}
 
         {/* charts */}
-        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap" 
-        style={{ border: "0px solid brown", borderRadius: 4 ,background:"#FAF9F6"}}>
+        <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap"
+          style={{ border: "2px outset brown", borderRadius: 4, background: "#F5F5DC" }}>
           <Suspense fallback={<p>wait...........</p>}>
             <BasicBars userData={userData} />
-
-
           </Suspense>
           <BasicBars2 userData={userData} />
         </div>
@@ -199,22 +179,21 @@ const Home = () => {
 
 
         {/*export & filters :  export,gender,value,status */}
-        <Row className='m-2 p-2' style={{ border: "0px solid blue", borderRadius: 4 ,background:"#FAF9F6"}}>
+        <Row className='m-2 p-2' style={{ border: "2px outset black", borderRadius: 4, background: "#E9DCC9" }}>
           <div className="filters_div mt-5 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid green" }}>
 
-            {/* export */}
+            {/* export  starts*/}
 
             <div className="export col-sm-12 col-md-12 col-lg-3 d-flex justify-content-center">
               <Button onClick={exportcsv} variant='primary' className='export_button'>Export To CSV</Button>
-
             </div>
-            {/* export */}
+
+            {/* export ends*/}
 
             {/* gender */}
-            <div className="filter_gender col-sm-12 col-md-12 col-lg-3">
-
-              <h3 className='text-center'>Filter By Gender</h3>
-              <div className="gender d-flex justify-content-around">
+            <div className="filter_gender col-sm-12 col-md-12 col-lg-3" style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3 }}>
+              <h6 style={{ color: "red" }} className='text-center'>Filter By Gender</h6>
+              <div className="gender d-flex justify-content-around" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
                   label={"All"}
@@ -223,18 +202,13 @@ const Home = () => {
                   defaultChecked
                   onChange={(e) => setGender(e.target.value)}
 
-
-
                 />
-
                 <Form.Check
                   type={"radio"}
                   label={"Male"}
                   name="gender"
                   value={"Male"}
                   onChange={(e) => setGender(e.target.value)}
-
-
                 />
                 <Form.Check
                   type={"radio"}
@@ -247,14 +221,15 @@ const Home = () => {
             </div>
             {/* gender ends*/}
 
-            {/* sort by value(new_old) */}
-            <div className="filter_newold col-sm-12 col-md-12 col-lg-3">
-              <h3 className='text-center'>Sort by Value</h3>
+            {/* sort by value starts */}
+            <div className="filter_newold col-sm-12 col-md-12 col-lg-3" >
+              <h6 style={{ color: "red" }} className='text-center'>Sort by Value</h6>
 
               <Dropdown className='text-center'>
                 <Dropdown.Toggle className='dropdown_btn' id='dropdown-basic'>
-                  <i className='fa-solid fa-sort'></i>
+                  <i style={{ fontSize: 13 }} className='fa-solid fa-sort'></i>
                 </Dropdown.Toggle>
+
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setSort("new")}>
                     New
@@ -263,15 +238,16 @@ const Home = () => {
                     Old
                   </Dropdown.Item>
                 </Dropdown.Menu>
+
               </Dropdown>
             </div>
             {/* sort by value ends*/}
 
             {/* sort by status */}
-            <div className="filter_status col-sm-12 col-md-12 col-lg-3">
+            <div className="filter_status col-sm-12 col-md-12 col-lg-3" style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3 }}>
 
-              <h3 className='text-center'>Filter By Status</h3>
-              <div className="status_radio d-flex justify-content-around flex-wrap gap-1">
+              <h6 style={{ color: "red" }} className='text-center'>Filter By Status</h6>
+              <div className="status_radio d-flex justify-content-around flex-wrap gap-1" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
                   label={"All"}
@@ -304,12 +280,10 @@ const Home = () => {
 
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "center", background: "", width: "100%", padding: 5, alignItems: "center", marginTop: 3, borderRadius: 4 }}>
-              <div style={{ border: "1px solid black", borderRadius: 4, padding: 2 }}>
-                <p style={{ fontWeight: "bold", marginLeft: 26 }}>Filter By Date-Range :</p>
-
+              <div style={{ border: "3px outset grey", borderRadius: 4, padding: 2 }}>
+                <p style={{ fontWeight: "", color: "red", marginLeft: 26 }}>Filter By Date-Range :</p>
                 <DateRange setDateRange={setDateRange} />
               </div>
-
             </div>
             {/* date range ends */}
           </div>
@@ -323,12 +297,13 @@ const Home = () => {
 
       {/* table */}
       {
-
         showSpin ? <Spiner /> : <Tables userData={userData} deleteUser={deleteUser} getAllUsers={getAllUsers}
           handlePrevious={handlePrevious} handleNext={handleNext} setPage={setPage} page={page} pageCount={pageCount}
         />
       }
       {/* table ends*/}
+
+      {/* footer starts */}
       <Footer />
 
     </div>

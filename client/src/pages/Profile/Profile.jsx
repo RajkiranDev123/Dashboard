@@ -48,14 +48,14 @@ const Profile = () => {
 
           <Card className='card-profile shadow col-lg-6 mx-auto mt-6 p-1 ' style={{ border: "0px solid blue" }}>
             <Card.Body ref={pdfRef} style={{ border: "1px dashed red" }}>
+
+              {/* image */}
               <Row className='p-2' style={{ border: "0px solid green" }}>
                 <div className="col" style={{ border: "0px solid yellow" }}>
                   <div className="card-profile-stats d-flex justify-content-center">
                     <img width={25} height={25} style={{ borderRadius: "50%" }} src={`${BASE_URL}/${userProfile?.profile}`} alt='img' />
-
                   </div>
                 </div>
-
               </Row>
 
               <div className='text-center mt-1' style={{ border: "0px solid red" }}>
@@ -67,43 +67,22 @@ const Profile = () => {
                 <h4><i className='fa-solid fa-square-check phone'></i> <i className='fa-solid fa-xmark location'></i>&nbsp;Status : &nbsp;{userProfile?.status}</h4>
                 <h4><i className='fa-solid fa-calendar'></i>&nbsp;Date Created : {moment(userProfile?.dateCreated).format("DD-MM-YY")}</h4>
                 <h4><i className='fa-solid fa-calendar-days'></i>&nbsp;Date Updated :{moment(userProfile?.dateCreated).format("DD-MM-YY")}</h4>
-
-
                 <div>
-
-    <QRCode style={{ height: 200, width: 200 }} value={userProfile.mobile} />
-
+                  <QRCode style={{ height: 200, width: 200 }} value={userProfile?.mobile || ""} />
                 </div>
-
-
-
-
-
-
-
-
               </div>
             </Card.Body>
 
 
             <button onClick={() => downloadPdf(pdfRef)}
-              style={{ display: "flex", justifyContent: "center", background: "blue", color: "white", marginTop: 2, border: "none" }}>Download as Pdf</button>
+              style={{ display: "flex", justifyContent: "center", background: "blue", color: "white", marginTop: 2, border: "none" }}>
+              Download as Pdf
+            </button>
 
           </Card>
-
-
-
-
-
         </div>
 
     }
-
-
-
-
-
-
   </>
   )
 }

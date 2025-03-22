@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div style={{display:"flex",justifyContent:"center"}}>
 
-        <p>
+        <p style={{color:"white"}}>
         © 2024 R.K Upadhyay. All rights reserved.
         </p>
 

@@ -23,6 +23,7 @@ import { addData } from "../../components/context/contextProvider"
 const Register = () => {
   const [inputData, setInputData] = useState({ fname: "", lname: "", email: "", mobile: "", gender: "", location: "" })
   const [status, setStatus] = useState("Active")
+
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
 
@@ -168,6 +169,7 @@ const Register = () => {
               Note: Only form elements with a name attribute will have their values passed when submitting a form.
                */}
 
+              {/* gender */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicGender">
                 <Form.Label>Select Your Gender :</Form.Label>
                 <Form.Check
@@ -176,16 +178,20 @@ const Register = () => {
                   name="gender"
                   value={"Male"}
                   onChange={setInputValue}
+                // defaultChecked
                 />
                 {/* name should be same to make a group that is gender */}
                 <Form.Check
                   type={"radio"}
+                  // type={"checkbox"}
                   label={"Female"}
                   name={"gender"}
                   value={"Female"}
                   onChange={setInputValue}
                 />
               </Form.Group>
+
+              {/* status */}
 
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicStatus">
                 <Form.Label>Select Your Status : {status}</Form.Label>
@@ -196,9 +202,9 @@ const Register = () => {
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicProfile">
                 <Form.Label>Select Your Profile Image</Form.Label>
                 <Form.Control type="file" name="user_profile" onChange={setProfileImg} placeholder="Profile" />
-
               </Form.Group>
 
+              {/* location */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicLocation">
                 <Form.Label>Location</Form.Label>
                 <Form.Control onChange={setInputValue} value={inputData.location} type="text" placeholder="Location" name="location" />
@@ -212,7 +218,7 @@ const Register = () => {
             </Row>
           </Form>
         </Card>
-          {/* card ends*/}
+        {/* card ends*/}
       </div>
       {/* container ends*/}
 
