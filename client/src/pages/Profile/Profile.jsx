@@ -6,7 +6,7 @@ import "./profile.css"
 import Spiner from '../../components/Spiner/Spiner'
 import { useParams } from 'react-router-dom'
 
-import { BASE_URL } from '../../services/ApiEndPoints'
+
 import { fetchSingleUser } from "../../services/ApiRequests"
 import moment from "moment"
 
@@ -24,10 +24,8 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     const response = await fetchSingleUser(id)
-    console.log(response)
-    console.log(response.data)
-    if (response.status == 200) {
-      setUserProfile(response.data)
+    if (response?.status == 200) {
+      setUserProfile(response?.data)
     } else {
       console.log("error")
     }
@@ -53,11 +51,12 @@ const Profile = () => {
               <Row className='p-2' style={{ border: "0px solid green" }}>
                 <div className="col" style={{ border: "0px solid yellow" }}>
                   <div className="card-profile-stats d-flex justify-content-center">
-                    <img width={25} height={25} style={{ borderRadius: "50%" }} src={`${BASE_URL}/${userProfile?.profile}`} alt='img' />
+                    <img width={25} height={25} style={{ borderRadius: "50%" }} src={userProfile?.profile} alt='img' />
                   </div>
                 </div>
               </Row>
 
+              {/* all info */}
               <div className='text-center mt-1' style={{ border: "0px solid red" }}>
                 <h3>{userProfile?.fname}</h3>
                 <h4><i className='fa-solid fa-envelope email'></i>&nbsp;{userProfile?.email}</h4>

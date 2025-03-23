@@ -3,20 +3,21 @@ import multer from "multer"
 //Multer adds a file object to the request object. (req.file.filename)
 const storage = multer.diskStorage(
     {
-    destination: (req, file, callback) => {
-        callback(null, "./uploads")
-    },
-    // add filename property to req.file object ==> req.file={filename:"M.jpg"}
-    filename: (req, file, callback) => {
-        //Date. now() returns the number of milliseconds since January 1, 1970.
-        const noOfMilliseconds = Date.now();
-        const time = new Date(noOfMilliseconds).toString().split(" ").join("-").split("-")[4].split(":").join("")
-        const todayDate = new Date(noOfMilliseconds).toString().split(" ").join("-").slice(0, 16)
-        const merge = todayDate + time
-        const filename = `img-${merge}_${file.originalname}`
-        callback(null, filename)
-    },
-}
+        destination: (req, file, callback) => {
+            callback(null, "./uploads")
+        },
+        // add filename property to req.file object ==> req.file={filename:"M.jpg"}
+        filename: (req, file, callback) => {
+            console.log("file from multer==>",file)
+            //Date. now() returns the number of milliseconds since January 1, 1970.
+            const noOfMilliseconds = Date.now();
+            const time = new Date(noOfMilliseconds).toString().split(" ").join("-").split("-")[4].split(":").join("")
+            const todayDate = new Date(noOfMilliseconds).toString().split(" ").join("-").slice(0, 16)
+            const merge = todayDate + time
+            const filename = `img-${merge}_${file.originalname}`
+            callback(null, filename)
+        },
+    }
 )
 
 //filter

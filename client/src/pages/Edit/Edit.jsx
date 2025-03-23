@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Headers from "../../components/Headers/Headers"
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchSingleUser, editUser } from '../../services/ApiRequests';
-import { BASE_URL } from '../../services/ApiEndPoints';
+
 import { updateData } from "../../components/context/contextProvider"
 
 const Edit = () => {
@@ -30,13 +30,12 @@ const Edit = () => {
     mobile: "",
     gender: "",
     location: ""
-
   })
 
   const [status, setStatus] = useState("Active")
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
-  const [imgTemp, setImageTemp] = useState("")
+  // const [imgTemp, setImageTemp] = useState("")
 
 
   const [imgData, setImgData] = useState("")
@@ -46,7 +45,7 @@ const Edit = () => {
   const setInputValue = (e) => {
     const { name, value } = e.target
     setInputData({ ...inputData, [name]: value })
-    console.log(inputData)
+
   }
 
   // console.log(inputData) //dont use it here otherwise it will output if you set image or status
@@ -58,7 +57,7 @@ const Edit = () => {
   }
 
   const setProfileImg = (e) => {
-    console.log("img=>", e.target.files[0])
+    // console.log("img=>", e.target.files[0])
     setImage(e.target.files[0])
   }
 
@@ -90,7 +89,7 @@ const Edit = () => {
     } else if (image == "" && imgData == "") {
       toast.error("Image is required!")
     } else {
-      // toast.success("Registration Success")
+
       const data = new FormData()
       data.append("fname", fname)
       data.append("lname", lname)
@@ -101,7 +100,8 @@ const Edit = () => {
       data.append("user_profile", image || imgData)
       data.append("location", location)
       console.log("data", data)
-      const config = { "Content-Type": "multipart/form-data","img-name":imgTemp?.split("/")}
+      const config = { "Content-Type": "multipart/form-data", "img-name": imgData?.split("/") }
+
       const response = await editUser(id, data, config)
       if (response?.status == 200) {
         setUpdate(response?.data)
@@ -119,7 +119,7 @@ const Edit = () => {
       setInputData(response?.data)
       setStatus(response?.data?.status)
       setImgData(response?.data?.profile)
-      setImageTemp(response?.data?.profile)
+      // setImageTemp(response?.data?.profile)
     } else {
       console.log("error")
     }
@@ -130,11 +130,9 @@ const Edit = () => {
   }, [])
 
   useEffect(() => {
-    // instead of putting this in ue you can create a function to put the below logic when uploading image
+    // dont call  getSingleUserData() here otherwise all edited data will go away when image is uploaded
     if (image) {
       setImgData("")
-      let objectUrl = URL.createObjectURL(image)
-      console.log(objectUrl)
       setPreview(URL.createObjectURL(image))
     }
   }, [image])
@@ -178,6 +176,7 @@ const Edit = () => {
                 <Form.Control type="number" value={inputData?.mobile} onChange={setInputValue} placeholder="Mobile" name='mobile' />
               </Form.Group>
 
+              {/* gender */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicGender">
                 <Form.Label>Select Your Gender</Form.Label>
                 <Form.Check
@@ -203,11 +202,13 @@ const Edit = () => {
                 <Select options={options} value={status} onChange={setStatusValue} />
               </Form.Group>
 
+              {/* img */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicProfile">
                 <Form.Label>Select Your Profile Image</Form.Label>
                 <Form.Control type="file" name="user_profile" onChange={setProfileImg} placeholder="Profile" />
               </Form.Group>
 
+              {/* location */}
               <Form.Group className="mb-3 col-lg-6" controlId="formBasicLocation">
                 <Form.Label>Location</Form.Label>
                 <Form.Control onChange={setInputValue} value={inputData?.location} type="text" placeholder="Location" name="location" />

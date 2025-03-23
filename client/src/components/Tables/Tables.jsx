@@ -5,15 +5,15 @@ import Table from "react-bootstrap/Table"
 import Dropdown from "react-bootstrap/Dropdown"
 
 import "./table.css"
-
-import {  useNavigate } from "react-router-dom"
+import moment from "moment";
+import { useNavigate } from "react-router-dom"
 
 import { changeStatus } from '../../services/ApiRequests'
 import { ToastContainer, toast } from 'react-toastify';
 
 import Pagin from '../Pagination/Pagination'
 
-const Tables = ({ userData, deleteUser, getAllUsers,
+const Tables = ({ usersData, deleteUser, getAllUsers,
   handleNext, handlePrevious, page, pageCount, setPage }) => {
 
   const updateStatus = async (id, status) => {
@@ -52,11 +52,11 @@ const Tables = ({ userData, deleteUser, getAllUsers,
             {/* tbody */}
             <tbody>
               {
-                userData?.length > 0 ? userData?.map((element, index) => {
+                usersData?.length > 0 ? usersData?.map((element, index) => {
                   return <>
                     <tr>
                       <td>{index + 1 + (page - 1) * 4}</td>
-                      <td>{element?.dateCreated}</td>
+                      <td>{moment(element?.dateCreated).format("DD-MM-YYYY")}</td>
                       <td>{element?.fname + " " + element?.lname}</td>
                       <td>{element?.email}</td>
                       <td>{element?.gender}</td>
@@ -80,11 +80,11 @@ const Tables = ({ userData, deleteUser, getAllUsers,
 
                       {/* image */}
                       <td>
-                        {/* <img width={25} height={25} style={{borderRadius:"50%"}} src={`${BASE_URL}/uploads/${element.profile}`} alt='img' /> */}
+                        {/* <img width={25} height={25} style={{borderRadius:"50%"}} src={`${BASE_URL}/uploads/${element?.profile}`} alt='img' /> */}
                         <img width={25} height={25} style={{ borderRadius: "50%" }} src={element?.profile} alt='img' />
                       </td>
 
-                      {/* actions */}
+                      {/* actions : view,edit,delete*/}
                       <td>
                         <Dropdown className='text-center'>
 

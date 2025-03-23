@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 
-export default function BasicBars({userData}) {
+export default function BasicBars({usersData}) {
 console.log("i am from basic bars")
-  let countActive=userData.filter(e=>e.status=="Active").length
-  let countInActive=userData.filter(e=>e.status=="InActive").length
+  let countActive=usersData.filter(e=>e.status=="Active").length
+  let countInActive=usersData.filter(e=>e.status=="InActive").length
 
   return (
     <PieChart

@@ -28,7 +28,7 @@ const Register = () => {
   const [preview, setPreview] = useState("")
 
   const navigate = useNavigate()
-  const { userAdd, setUserAdd } = useContext(addData)
+  const { setUserAdd } = useContext(addData)
 
   const options = [
     { value: "Active", label: "Active" },
@@ -97,11 +97,10 @@ const Register = () => {
       console.log("response after submit ==>", response)
       if (response?.status === 201) {
         setInputData({ ...inputData, fname: "", lname: "", email: "", mobile: "", gender: "", location: "" })
+        // context
         setUserAdd(response?.data)
-
         setStatus("")
         setImage("")
-
         navigate("/")
       } else {
         toast.error(response?.response?.data?.message)

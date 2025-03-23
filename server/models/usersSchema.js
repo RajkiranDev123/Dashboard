@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import validator from "validator"
 
 const usersSchema = new mongoose.Schema({
-
     fname: {
         type: String,
         required: true,
@@ -54,8 +53,6 @@ const usersSchema = new mongoose.Schema({
     },
     dateCreated: Date,
     // { type: Date, default: Date.now() }
-  
-
 })
 ////////////model name
 export const users = new mongoose.model("users", usersSchema)

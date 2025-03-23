@@ -4,29 +4,26 @@ import csv from "fast-csv"
 import fs from "fs"
 import { uploadOnCloudinary, removeFromCloudinary } from "../utilities/cloudinary.js"
 
+//////////////////////////////////////////////// add new user ///////////////////////////////////////////////////////////////
 export const userRegister = async (req, res) => {
-
     const file = req?.file?.filename
-
     const { fname, lname, email, mobile, gender, location, status } = req.body
-
     if (!fname || !lname || !email || !mobile || !gender || !location || !status || !file) {
-        return res.status(400).json("all fields are required")
+        return res.status(400).json("all fields are required!")
     }
-
     try {
         let user = await users.findOne({ email: email })
-        console.log("user==>", user)//not present then null otherwise {...}
+
         if (user) {
-            return res.status(400).json({ message: "user email already exists" })
+            return res.status(400).json({ message: "user email already exists!" })
         } else {
             const dateCreated = moment(new Date()).format("YYYY-MM-DD hh:mm:ss")
             console.log("date created ==>", dateCreated)// is of string type
             const uploadImage = await uploadOnCloudinary(process.cwd() + "/uploads/" + file)
+            //////////////////////////////////////////// server/uploads/image2536.jpg
             if (!uploadImage) {
                 return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
             }
-
             const userData = new users({
                 fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || "", dateCreated
             })
@@ -39,8 +36,7 @@ export const userRegister = async (req, res) => {
         return res.status(500).json(error.message)
     }
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////getAllUsers//////////////////////////////////////////////////////////////////////////
 export const getAllUsers = async (req, res) => {
     const search = req.query.search || ""
     const gender = req.query.gender || ""
@@ -69,7 +65,6 @@ export const getAllUsers = async (req, res) => {
         const count = await users.countDocuments(query)
         const skip = (page - 1) * ITEM_PER_PAGE  //for page no 2: (2-1)*4 ==> 1*4=4 , skip 4 docs & get from 5th
         const pageCount = Math.ceil(count / ITEM_PER_PAGE)//pageCount is total pages 8/4=2 pages
-
         console.log(query)
         const usersData = await users.find(query).skip(skip).limit(ITEM_PER_PAGE)
             .sort({ dateCreated: sort == "new" ? -1 : 1 })
@@ -82,12 +77,10 @@ export const getAllUsers = async (req, res) => {
         })
     } catch (error) {
         console.log(error.message)
-
         return res.status(500).json(error)
     }
 }
-
-
+////////////////////////////////////////////////////// getSingleUser//////////////////////////////////////////////////////////////////
 export const getSingleUser = async (req, res) => {
     const { id } = req.params
 
@@ -103,14 +96,11 @@ export const getSingleUser = async (req, res) => {
 //edit and update user /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const editUser = async (req, res) => {
     const { id } = req.params
-    const img = req.headers["img-name"]?.split(",")[7]?.split(".")[0]
-    console.log("img-name", img)
+    const imgName = req.headers["img-name"]?.split(",")[7]?.split(".")[0]
     const { fname, lname, email, mobile, gender, location, status, user_profile } = req.body
     const file = req.file ? req.file.filename : user_profile
-
-    //data.append("user_profile", image)
     const dateUpdated = moment(new Date()).format("YY-MM-DD hh:mm:ss")
-    try {  //img-Wed-Dec-11-2024-115928_f.jpg //http://res.cloudinary.com/dtwkdhzni/image/upload/v1733576939/sypprhlsolkqiylukroz.jpg
+    try {
         let uploadImage
         if (file.startsWith('img')) {
             console.log(true)
@@ -118,14 +108,11 @@ export const editUser = async (req, res) => {
             if (!uploadImage) {
                 return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
             }
-
-            const removeImage = await removeFromCloudinary(img)
-            console.log("test", removeImage)
-
+            const removeImage = await removeFromCloudinary(imgName)
+            console.log("removed image==>", removeImage)
         } else {
             console.log(false)
         }
-
         const updateUser = await users.findByIdAndUpdate(
             { _id: id },
             { fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || file, dateUpdated },
@@ -135,12 +122,11 @@ export const editUser = async (req, res) => {
         return res.status(200).json(updateUser)
 
     } catch (error) {
-        console.log(error.message)
         return res.status(500).json(error.message)
     }
 }
 
-///////////////////////////////////////// end of edit and update user /////////////////////////////////////////////////////
+///////////////////////////////////////// delete user /////////////////////////////////////////////////////
 
 export const deleteUser = async (req, res) => {
     const { id } = req.params

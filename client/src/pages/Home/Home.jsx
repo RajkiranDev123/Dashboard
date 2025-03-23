@@ -8,7 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import Row from "react-bootstrap/Row"
 import Alert from "react-bootstrap/Alert"
 import { useNavigate } from 'react-router-dom'
-
+import moment from "moment"
 import Tables from "../../components/Tables/Tables"
 
 import Spiner from '../../components/Spiner/Spiner'
@@ -35,7 +35,7 @@ const Home = () => {
   const { update, setUpdate } = useContext(updateData)
   //      use    &    set
 
-  const [userData, setUserData] = useState([])
+  const [usersData, setUsersData] = useState([])
   const [search, setSearch] = useState("")
   const [gender, setGender] = useState("All")
   const [status, setStatus] = useState("All")
@@ -93,7 +93,7 @@ const Home = () => {
     const response = await fetchAllUsers(search, gender, status, sort, page, config)
 
     if (response?.status == 200) {
-      setUserData(response?.data?.usersData)
+      setUsersData(response?.data?.usersData)
       setPageCount(response?.data?.pagination?.pageCount)
     } else {
       console.log("failed to fetch")
@@ -126,6 +126,7 @@ const Home = () => {
     {
       userAdd ?
         <Alert variant='success' onClose={() => setUserAdd("")} dismissible>{userAdd.fname} is added!</Alert> : ""
+      ////////////////////////////////////////// empty the context
     }
     {
       update ?
@@ -171,9 +172,9 @@ const Home = () => {
         <div className="search_add m-2 p-2 d-flex justify-content-between align-items-center flex-wrap"
           style={{ border: "2px outset brown", borderRadius: 4, background: "#F5F5DC" }}>
           <Suspense fallback={<p>wait...........</p>}>
-            <BasicBars userData={userData} />
+            <BasicBars usersData={usersData} />
           </Suspense>
-          <BasicBars2 userData={userData} />
+          <BasicBars2 usersData={usersData} />
         </div>
         {/* charts ends */}
 
@@ -191,7 +192,8 @@ const Home = () => {
             {/* export ends*/}
 
             {/* gender */}
-            <div className="filter_gender col-sm-12 col-md-12 col-lg-3" style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3 }}>
+            <div className="filter_gender col-sm-12 col-md-12 col-lg-3"
+              style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3, boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px " }}>
               <h6 style={{ color: "red" }} className='text-center'>Filter By Gender</h6>
               <div className="gender d-flex justify-content-around" style={{ color: "brown" }}>
                 <Form.Check
@@ -244,7 +246,8 @@ const Home = () => {
             {/* sort by value ends*/}
 
             {/* sort by status */}
-            <div className="filter_status col-sm-12 col-md-12 col-lg-3" style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3 }}>
+            <div className="filter_status col-sm-12 col-md-12 col-lg-3"
+              style={{ border: "0px solid red", borderRadius: 3, background: "white", padding: 3, boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px " }}>
 
               <h6 style={{ color: "red" }} className='text-center'>Filter By Status</h6>
               <div className="status_radio d-flex justify-content-around flex-wrap gap-1" style={{ color: "brown" }}>
@@ -297,7 +300,7 @@ const Home = () => {
 
       {/* table */}
       {
-        showSpin ? <Spiner /> : <Tables userData={userData} deleteUser={deleteUser} getAllUsers={getAllUsers}
+        showSpin ? <Spiner /> : <Tables usersData={usersData} deleteUser={deleteUser} getAllUsers={getAllUsers}
           handlePrevious={handlePrevious} handleNext={handleNext} setPage={setPage} page={page} pageCount={pageCount}
         />
       }
