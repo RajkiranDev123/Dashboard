@@ -25,17 +25,13 @@ export const editUser = async (id, data, header) => {
     return await wrapper("PUT", `${BASE_URL}/edit/user/${id}`, data, header)
 }
 
+/////////////////////////////////////// delete user /////////////////////////////////////////////////
 export const userDelete = async (id) => {
-    console.log(id)
     return await wrapper("DELETE", `${BASE_URL}/delete/user/${id}`, {})
 }
-
-
-
+//////////////////////////////////////////// update status /////////////////////////////////////////////////
 export const changeStatus = async (id, data) => {
-    console.log(id)
     return await wrapper("PUT", `${BASE_URL}/change/status/${id}`, { data })
-    // wrapper will return something and also changeStatus will also need to return
 }
 
 export const getMeta = async () => {

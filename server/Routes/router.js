@@ -23,11 +23,11 @@ router.put("/edit/user/:id", upload.single("user_profile"), editUser)
 
 //delete a user
 router.delete("/delete/user/:id", deleteUser)
-//
+//update status
 router.put("/change/status/:id", changeStatus)
 //
 router.get("/getMetaData", getMetaData)
-//
+//export to csv
 router.get("/exportCsv", exportCsv)
 
 export default router

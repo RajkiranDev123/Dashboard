@@ -16,6 +16,7 @@ import Pagin from '../Pagination/Pagination'
 const Tables = ({ usersData, deleteUser, getAllUsers,
   handleNext, handlePrevious, page, pageCount, setPage }) => {
 
+  // change status
   const updateStatus = async (id, status) => {
     const res = await changeStatus(id, status)
     if (res.status == 200) {
@@ -59,7 +60,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
                       <td>{moment(element?.dateCreated).format("DD-MM-YYYY")}</td>
                       <td>{element?.fname + " " + element?.lname}</td>
                       <td>{element?.email}</td>
-                      <td>{element?.gender}</td>
+                      <td style={{ color: element?.gender == "Male" ? "blue" : "black" }}>{element?.gender}</td>
 
                       {/* status */}
                       <td>

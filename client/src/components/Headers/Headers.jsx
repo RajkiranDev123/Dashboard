@@ -13,11 +13,11 @@ const Headers = ({ headerName }) => {
     navigate("/")
   }
   return (
-    <div style={{ background: "#E2DFD2", top:0,position:"sticky",zIndex:5 }}>
+    <div style={{ background: "#E5E4E2", top:0,position:"sticky",zIndex:5 }}>
 
       <Navbar expand="lg" >
         <Container>
-          <Navbar.Brand href="">{headerName}</Navbar.Brand>
+          <Navbar.Brand style={{fontWeight:"bold"}} href="">{headerName}</Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 

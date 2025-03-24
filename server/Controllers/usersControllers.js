@@ -39,11 +39,12 @@ export const userRegister = async (req, res) => {
 ///////////////////////////////////////////////////////getAllUsers//////////////////////////////////////////////////////////////////////////
 export const getAllUsers = async (req, res) => {
     const search = req.query.search || ""
-    const gender = req.query.gender || ""
-    const status = req.query.status || ""
-    const sort = req.query.sort || ""
-    const dateRange = req.headers["date-range"]
+    const gender = req.query.gender //default is All
+    const status = req.query.status //default is all
+    const sort = req.query.sort      // default is new
 
+    const dateRange = req.headers["date-range"]
+    console.log("dr==>", dateRange)
     let start = dateRange?.split("--")[0] + "T00:00:00Z"
     let end = dateRange?.split("--")[1] + "T23:59:59Z"
 
@@ -51,7 +52,6 @@ export const getAllUsers = async (req, res) => {
     const ITEM_PER_PAGE = 4
 
     const query = { fname: { $regex: search, $options: "i" } }
-
     if (gender !== "All") {
         query.gender = gender
     }
@@ -62,21 +62,19 @@ export const getAllUsers = async (req, res) => {
         query.dateCreated = { $gte: start, $lte: end }
     }
     try {
-        const count = await users.countDocuments(query)
-        const skip = (page - 1) * ITEM_PER_PAGE  //for page no 2: (2-1)*4 ==> 1*4=4 , skip 4 docs & get from 5th
-        const pageCount = Math.ceil(count / ITEM_PER_PAGE)//pageCount is total pages 8/4=2 pages
-        console.log(query)
-        const usersData = await users.find(query).skip(skip).limit(ITEM_PER_PAGE)
-            .sort({ dateCreated: sort == "new" ? -1 : 1 })
+        const totalDocs = await users.countDocuments(query)
+        const skip = (page - 1) * ITEM_PER_PAGE
+        const pageCount = Math.ceil(totalDocs / ITEM_PER_PAGE)//pageCount is total pages 8/4=2 pages
+        const usersData = await users.find(query).skip(skip).limit(ITEM_PER_PAGE).sort({ dateCreated: sort == "new" ? -1 : 1 })
 
         return res.status(200).json({
             pagination: {
-                count, pageCount
+                pageCount
             },
             usersData
         })
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         return res.status(500).json(error)
     }
 }
@@ -93,18 +91,18 @@ export const getSingleUser = async (req, res) => {
     }
 }
 
-//edit and update user /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////edit and update user ////////////////////////////////////////////////////////////////////////////////////////
 export const editUser = async (req, res) => {
     const { id } = req.params
     const imgName = req.headers["img-name"]?.split(",")[7]?.split(".")[0]
     const { fname, lname, email, mobile, gender, location, status, user_profile } = req.body
-    const file = req.file ? req.file.filename : user_profile
+    const filename = req.file ? req.file.filename : user_profile
     const dateUpdated = moment(new Date()).format("YY-MM-DD hh:mm:ss")
     try {
         let uploadImage
-        if (file.startsWith('img')) {
+        if (filename.startsWith('img')) {
             console.log(true)
-            uploadImage = await uploadOnCloudinary(process.cwd() + "/uploads/" + file)
+            uploadImage = await uploadOnCloudinary(process.cwd() + "/uploads/" + filename)
             if (!uploadImage) {
                 return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
             }
@@ -115,7 +113,7 @@ export const editUser = async (req, res) => {
         }
         const updateUser = await users.findByIdAndUpdate(
             { _id: id },
-            { fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || file, dateUpdated },
+            { fname, lname, email, mobile, gender, location, status, profile: uploadImage?.url || filename, dateUpdated },
             { new: true }
         )
         await updateUser.save()
@@ -140,21 +138,51 @@ export const deleteUser = async (req, res) => {
     }
 }
 
+////////////////////////////////////////////////// update status////////////////////////////
 export const changeStatus = async (req, res) => {
     const { id } = req.params
     const { data } = req.body
-
-    console.log(id)
     try {
         const changedStatus = await users.findByIdAndUpdate({ _id: id }, { status: data }, { new: true })
         res.status(200).json(changedStatus)
-
     } catch (error) {
         res.status(500).json(error)
     }
 }
+/////////////////////////////////////////////////// export to csv ///////////////////////////////////
+export const exportCsv = async (req, res) => {
+    try {
+        const usersData = await users.find()
+        const csvStream = csv.format({ headers: true })
+        if (!fs.existsSync("csv")) {
+            fs.mkdirSync("csv")
+            if (fs.existsSync("csv")) {
+                fs.mkdirSync("csv/files")
+            }
+        }
+        const writableStream = fs.createWriteStream(
+            "csv/files/users.csv"
+        )
+        csvStream.pipe(writableStream)
+        writableStream.on("finish", () => {
+            res.status(200).json({ downloadUrl: `http://localhost:3000/csv/files/users.csv` })
+        })
+        if (usersData.length > 0) {
+            usersData.map(e => {
+                csvStream.write({
+                    Firstname: e.fname ? e.fname : "-"
+                })
+            })
+        }
+        csvStream.end()
+        writableStream.end()
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error.message)
+    }
+}
 
-
+//////////////////////////////////////////////////// meta ////////////////////////////////////////////////////////
 export const getMetaData = async (req, res) => {
     try {
         const metaData1 = await users.aggregate(
@@ -168,81 +196,52 @@ export const getMetaData = async (req, res) => {
                     $count: "maleCount"
                 }
             ],
-
         )
-
         const metaData2 = await users.aggregate(
             [
-                {
-                    // match stage
+                {//stage 1
                     $match: {
                         gender: "Female"
                     }
                 },
-                {
+                {//stage 2
                     $count: "femaleCount"
                 }
             ],
-
         )
-
+        const metaData3 = await users.aggregate(
+            [
+                {//stage 1
+                    $match: {
+                        status: "Active"
+                    }
+                },
+                {//stage 2
+                    $count: "activeCount"
+                }
+            ],
+        )
+        const metaData4 = await users.aggregate(
+            [
+                {
+                    $match: {
+                        status: "InActive"
+                    }
+                },
+                {
+                    $count: "inActiveCount"
+                }
+            ],
+        )
+        console.log("mm", metaData4)
         let male = metaData1[0]?.maleCount
         let female = metaData2[0]?.femaleCount
-
-
-        res.status(200).json({ male, female })
-
+        let active = metaData3[0]?.activeCount
+        let inActive = metaData4[0]?.inActiveCount
+        res.status(200).json({ male, female, active, inActive })
     } catch (error) {
         console.log(error.message)
         res.status(500).json(error)
     }
 }
 
-export const exportCsv = async (req, res) => {
-    try {
-
-
-        const usersData = await users.find()
-
-        const csvStream = csv.format({ headers: true })
-
-        console.log(fs.existsSync("csv"))
-
-        if (!fs.existsSync("csv")) {
-            fs.mkdirSync("csv")
-            if (fs.existsSync("csv")) {
-                fs.mkdirSync("csv/files")
-            }
-        }
-
-        const writableStream = fs.createWriteStream(
-            "csv/files/users.csv"
-        )
-
-        csvStream.pipe(writableStream)
-
-        writableStream.on("finish", () => {
-            res.status(200).json({ downloadUrl: `http://localhost:3001/csv/files/users.csv` })
-
-        })
-
-        if (usersData.length > 0) {
-            usersData.map(e => {
-                csvStream.write({
-                    Firstname: e.fname ? e.fname : "-"
-                })
-            })
-        }
-
-        csvStream.end()
-        writableStream.end()
-
-
-
-
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json(error.message)
-    }
-}
