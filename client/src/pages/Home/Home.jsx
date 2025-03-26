@@ -31,6 +31,11 @@ const Home = () => {
   const [chartsHideShow, setChartsHideShow] = useState(true)
   const [usersAddedHideShow, setUsersAddedHideShow] = useState(true)
 
+  const [filterToday, setFilterToday] = useState(false)
+  const [filterYesterday, setFilterYesterday] = useState(false)
+  const [filterThisMonth, setFilterThisMonth] = useState(false)
+
+
 
 
 
@@ -135,6 +140,33 @@ const Home = () => {
     }
 
   }
+  // filters
+  const filterByToday = () => {
+    setFilterToday(true)
+    setFilterYesterday(false)
+    setFilterThisMonth(false)
+  }
+  const filterByYesterday = () => {
+    setFilterToday(false)
+    setFilterYesterday(true)
+    setFilterThisMonth(false)
+
+  }
+  const filterByThisMonth = () => {
+    setFilterToday(false)
+    setFilterYesterday(false)
+    setFilterThisMonth(true)
+
+  }
+  const clearAll = () => {
+    setFilterToday(false)
+    setFilterYesterday(false)
+    setFilterThisMonth(false)
+
+  }
+
+  ///////////filters/////////////////
+
   useEffect(() => {
     let timer1
     //debouncing
@@ -267,7 +299,7 @@ const Home = () => {
 
           {/* today */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3,marginTop:1,
+            background: "white", padding: 4, borderRadius: 3, marginTop: 1,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added Today</p>
@@ -395,11 +427,33 @@ const Home = () => {
             {/* sort by status ends*/}
 
             {/* date range */}
-            <div style={{ display: "flex", justifyContent: "center", width: "100%", padding: 5, alignItems: "center", marginTop: 3, borderRadius: 4 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", width: "100%", padding: 5, alignItems: "center", marginTop: 3, borderRadius: 4, gap: 5 }}>
               <div style={{ border: "0px outset grey", borderRadius: 4, padding: 2, background: "white", }}>
                 <p style={{ fontWeight: "", color: "red", marginLeft: 26 }}>Filter By Date-Range :</p>
                 <DateRange setDateRange={setDateRange} />
               </div>
+
+              <div style={{ background: "white", width: 320, height: 356, padding: 3, borderRadius: 3, overflowY: "scroll" }}>
+                <p style={{ color: "red" }}>&nbsp;More Filters :</p>
+
+                <br /><br />
+                <p onClick={() => filterByToday()} style={{
+                  padding: 2, borderRadius: 3, background: "grey", color: filterToday ? "black" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by Today</p>
+                <br />
+                <p onClick={() => { filterByYesterday() }} style={{
+                  padding: 2, borderRadius: 3, background: "grey", color: filterYesterday ? "black" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by Yesterday</p>
+                <br />
+                <p onClick={() => { filterByThisMonth() }} style={{
+                  padding: 2, borderRadius: 3, background: "grey", color: filterThisMonth ? "black" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by This Month</p>
+                <br />
+                <button onClick={() => { clearAll() }} style={{ background: "blue", borderRadius: 3, border: "none", width: "100%", color: "white" }}>Clear All</button>
+
+
+              </div>
+
             </div>
             {/* date range ends */}
           </div>

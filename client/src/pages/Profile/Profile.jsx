@@ -31,6 +31,11 @@ const Profile = () => {
     }
   }
 
+  const val = {
+    mobile: userProfile?.mobile,
+    email: userProfile?.email
+  }
+
   useEffect(() => {
     getUserProfile()
     setTimeout(() => {
@@ -45,7 +50,7 @@ const Profile = () => {
         <div className="container mt-4 p-5 " style={{ border: "0px solid red" }}>
 
           <Card className='card-profile shadow col-lg-6 mx-auto mt-6 p-1 ' style={{ border: "0px solid blue" }}>
-            <Card.Body ref={pdfRef} style={{ border: "1px dashed red" }}>
+            <Card.Body ref={pdfRef} style={{ border: "1px dashed black" }}>
 
               {/* image */}
               <Row className='p-2' style={{ border: "0px solid green" }}>
@@ -67,7 +72,7 @@ const Profile = () => {
                 <h4><i className='fa-solid fa-calendar'></i>&nbsp;Date Created : {moment(userProfile?.dateCreated).format("DD-MM-YY")}</h4>
                 <h4><i className='fa-solid fa-calendar-days'></i>&nbsp;Date Updated :{moment(userProfile?.dateCreated).format("DD-MM-YY")}</h4>
                 <div>
-                  <QRCode style={{ height: 200, width: 200 }} value={userProfile?.mobile || ""} />
+                  <QRCode style={{ height: 200, width: 200 }} value={`"name=${userProfile?.fname},email=${userProfile?.email}"`} />
                 </div>
               </div>
             </Card.Body>
