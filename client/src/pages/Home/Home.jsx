@@ -10,6 +10,7 @@ import Alert from "react-bootstrap/Alert"
 import { useNavigate } from 'react-router-dom'
 import moment from "moment"
 import Tables from "../../components/Tables/Tables"
+import { yesterdayDate,todayDate,monthDate } from '../../utilities/dates'
 
 import Spiner from '../../components/Spiner/Spiner'
 
@@ -145,23 +146,27 @@ const Home = () => {
     setFilterToday(true)
     setFilterYesterday(false)
     setFilterThisMonth(false)
+    setDateRange(todayDate)
   }
   const filterByYesterday = () => {
     setFilterToday(false)
     setFilterYesterday(true)
     setFilterThisMonth(false)
+    setDateRange(yesterdayDate)
 
   }
   const filterByThisMonth = () => {
     setFilterToday(false)
     setFilterYesterday(false)
     setFilterThisMonth(true)
+    setDateRange(monthDate)
 
   }
   const clearAll = () => {
     setFilterToday(false)
     setFilterYesterday(false)
     setFilterThisMonth(false)
+    setDateRange("")
 
   }
 
@@ -435,6 +440,7 @@ const Home = () => {
 
               <div style={{ background: "white", width: 320, height: 356, padding: 3, borderRadius: 3, overflowY: "scroll" }}>
                 <p style={{ color: "red" }}>&nbsp;More Filters :</p>
+                <p style={{fontWeight:"bold",textAlign:"center"}}>{dateRange}</p>
 
                 <br /><br />
                 <p onClick={() => filterByToday()} style={{
@@ -448,7 +454,7 @@ const Home = () => {
                 <p onClick={() => { filterByThisMonth() }} style={{
                   padding: 2, borderRadius: 3, background: "grey", color: filterThisMonth ? "black" : "white", cursor: "pointer", fontWeight: "bold"
                 }}>Filter by This Month</p>
-                <br />
+                {/* <br /> */}
                 <button onClick={() => { clearAll() }} style={{ background: "blue", borderRadius: 3, border: "none", width: "100%", color: "white" }}>Clear All</button>
 
 
