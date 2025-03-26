@@ -16,7 +16,7 @@ import Spiner from '../../components/Spiner/Spiner'
 //import the contexts (context has states)
 import { addData, updateData } from '../../components/context/contextProvider'
 
-import { fetchAllUsers, userDelete, exportToCsv } from "../../services/ApiRequests"
+import { fetchAllUsers, userDelete, exportToCsv, getMetaAddedUsers } from "../../services/ApiRequests"
 import { toast } from 'react-toastify'
 import Footer from '../../components/Footer/Footer'
 
@@ -28,6 +28,14 @@ const BasicBars2 = React.lazy(() => import("../../components/charts/barChart2"))
 const Home = () => {
   const [showSpin, setShowSpin] = useState(true)
   const [filterHideShow, setFilterHideShow] = useState(true)
+  const [chartsHideShow, setChartsHideShow] = useState(true)
+  const [usersAddedHideShow, setUsersAddedHideShow] = useState(true)
+
+
+
+
+  const [meta, setMeta] = useState({})
+
 
   const navigate = useNavigate()
 
@@ -44,6 +52,7 @@ const Home = () => {
   const [sort, setSort] = useState("new")
 
   const [dateRange, setDateRange] = useState("")
+  console.log(dateRange)
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(0)
 
@@ -51,6 +60,17 @@ const Home = () => {
     navigate("/register")
   }
 
+  function hideAll() {
+    setChartsHideShow(false)
+    setFilterHideShow(false)
+    setUsersAddedHideShow(false)
+  }
+
+  function showAll() {
+    setChartsHideShow(true)
+    setFilterHideShow(true)
+    setUsersAddedHideShow(true)
+  }
   // delete user
   const deleteUser = async (id) => {
     const response = await userDelete(id)
@@ -103,6 +123,18 @@ const Home = () => {
     }
   }
 
+  // meta usersAdded
+  const getMetaDataUsersAdded = async () => {
+
+    const response = await getMetaAddedUsers()
+
+    if (response.status == 200) {
+      setMeta(response.data)
+    } else {
+      console.log("failed to fetch")
+    }
+
+  }
   useEffect(() => {
     let timer1
     //debouncing
@@ -117,6 +149,7 @@ const Home = () => {
 
   useEffect(() => {
     getAllUsers()
+    getMetaDataUsersAdded()
     setTimeout(() => {
       setShowSpin(false)
     }, 1000)
@@ -169,7 +202,27 @@ const Home = () => {
         {/* search & add  ends*/}
 
         {/* charts */}
-        <div className="search_add m-2 p-2"
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+            <span style={{ color: "white" }}>Charts</span>
+            <button onClick={() => setChartsHideShow(!chartsHideShow)}
+              style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{chartsHideShow ? "▼" : "▲"}</button>
+          </p>
+          <div style={{ display: "flex" }}>
+            {/* hide all */}
+            <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+              <span style={{ color: "white" }}>Hide All</span>
+              <button onClick={() => hideAll()}
+                style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▲"}</button>
+            </p>
+            <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+              <span style={{ color: "white" }}>Show All</span>
+              <button onClick={() => showAll()}
+                style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▼"}</button>
+            </p>
+          </div>
+        </div>
+        {chartsHideShow && <div className="search_add m-2 p-2"
           style={{
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
@@ -177,15 +230,30 @@ const Home = () => {
           <Suspense fallback={<p>wait...........</p>}>
             <BasicBars2 />
           </Suspense>
-        </div>
+        </div>}
         {/* charts ends */}
         {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
         {/* users added details */}
-        <div className="search_add m-2 p-2 d-flex justify-content-around align-items-center flex-wrap"
+        <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+          <span style={{ color: "white" }}>Users Added</span>
+          <button onClick={() => setUsersAddedHideShow(!usersAddedHideShow)}
+            style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{usersAddedHideShow ? "▼" : "▲"}</button>
+        </p>
+        {usersAddedHideShow && <div className="search_add m-2 p-2 d-flex justify-content-around align-items-center flex-wrap"
           style={{
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
           }}>
+
+          {/* this month : metaDataMonth */}
+          <div style={{
+            background: "white", padding: 4, borderRadius: 3,
+            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+          }}>
+            <p style={{ color: "grey" }}>Users Added this Month</p>
+            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataMonth}</p>
+
+          </div>
 
           {/* yesterday */}
           <div style={{
@@ -193,20 +261,20 @@ const Home = () => {
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added Yesterday</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>8</p>
+            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataYesterday}</p>
 
           </div>
 
           {/* today */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3,
+            background: "white", padding: 4, borderRadius: 3,marginTop:1,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added Today</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>8</p>
+            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataToday}</p>
           </div>
 
-        </div>
+        </div>}
         {/* user added details ends */}
         {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
@@ -216,7 +284,7 @@ const Home = () => {
         <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
           <span style={{ color: "white" }}>Filtering & Sorting</span>
           <button onClick={() => setFilterHideShow(!filterHideShow)}
-            style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{filterHideShow ? "Hide" : "Show"}</button>
+            style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{filterHideShow ? "▼" : "▲"}</button>
         </p>
         {filterHideShow && <Row className='m-2 p-2' style={{ border: "2px outset black", borderRadius: 4, background: "#899499" }}>
 

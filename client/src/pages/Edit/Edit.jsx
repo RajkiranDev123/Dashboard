@@ -35,7 +35,7 @@ const Edit = () => {
   const [status, setStatus] = useState("Active")
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
-  // const [imgTemp, setImageTemp] = useState("")
+  const [imgTemp, setImageTemp] = useState("")
 
 
   const [imgData, setImgData] = useState("")
@@ -100,7 +100,7 @@ const Edit = () => {
       data.append("user_profile", image || imgData)
       data.append("location", location)
       console.log("data", data)
-      const config = { "Content-Type": "multipart/form-data", "img-name": imgData?.split("/") }
+      const config = { "Content-Type": "multipart/form-data", "img-name": imgTemp?.split("/") }
 
       const response = await editUser(id, data, config)
       if (response?.status == 200) {
@@ -119,7 +119,7 @@ const Edit = () => {
       setInputData(response?.data)
       setStatus(response?.data?.status)
       setImgData(response?.data?.profile)
-      // setImageTemp(response?.data?.profile)
+      setImageTemp(response?.data?.profile)
     } else {
       console.log("error")
     }

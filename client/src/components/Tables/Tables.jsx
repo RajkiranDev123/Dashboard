@@ -33,7 +33,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
     <div className="container mt-2 p-3" style={{ border: "0px solid red" }}>
       <Row className='p-1' style={{ border: "0px solid blue" }}>
 
-        <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 300 }}>
+        <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 400 }}>
 
           <Table >
             {/* thead */}

@@ -44,7 +44,7 @@ export const getAllUsers = async (req, res) => {
     const sort = req.query.sort      // default is new
 
     const dateRange = req.headers["date-range"]
-    console.log("dr==>", dateRange)
+    console.log("dr==>", dateRange)//2025-03-05--2025-03-05
     let start = dateRange?.split("--")[0] + "T00:00:00Z"
     let end = dateRange?.split("--")[1] + "T23:59:59Z"
 
@@ -95,8 +95,10 @@ export const getSingleUser = async (req, res) => {
 export const editUser = async (req, res) => {
     const { id } = req.params
     const imgName = req.headers["img-name"]?.split(",")[7]?.split(".")[0]
+
     const { fname, lname, email, mobile, gender, location, status, user_profile } = req.body
     const filename = req.file ? req.file.filename : user_profile
+
     const dateUpdated = moment(new Date()).format("YY-MM-DD hh:mm:ss")
     try {
         let uploadImage
@@ -106,7 +108,9 @@ export const editUser = async (req, res) => {
             if (!uploadImage) {
                 return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
             }
+
             const removeImage = await removeFromCloudinary(imgName)
+
             console.log("removed image==>", removeImage)
         } else {
             console.log(false)
@@ -120,6 +124,7 @@ export const editUser = async (req, res) => {
         return res.status(200).json(updateUser)
 
     } catch (error) {
+        console.log("rt", error.message)
         return res.status(500).json(error.message)
     }
 }
@@ -170,7 +175,12 @@ export const exportCsv = async (req, res) => {
         if (usersData.length > 0) {
             usersData.map(e => {
                 csvStream.write({
-                    Firstname: e.fname ? e.fname : "-"
+                    Firstname: e.fname ? e.fname : "-",
+                    Lastname: e.lname ? e.lname : "-",
+
+                    Mobile: e.mobile ? e.mobile : "-",
+
+
                 })
             })
         }
@@ -179,69 +189,6 @@ export const exportCsv = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json(error.message)
-    }
-}
-
-//////////////////////////////////////////////////// meta ////////////////////////////////////////////////////////
-export const getMetaData = async (req, res) => {
-    try {
-        const metaData1 = await users.aggregate(
-            [
-                {
-                    $match: {
-                        gender: "Male"
-                    }
-                },
-                {
-                    $count: "maleCount"
-                }
-            ],
-        )
-        const metaData2 = await users.aggregate(
-            [
-                {//stage 1
-                    $match: {
-                        gender: "Female"
-                    }
-                },
-                {//stage 2
-                    $count: "femaleCount"
-                }
-            ],
-        )
-        const metaData3 = await users.aggregate(
-            [
-                {//stage 1
-                    $match: {
-                        status: "Active"
-                    }
-                },
-                {//stage 2
-                    $count: "activeCount"
-                }
-            ],
-        )
-        const metaData4 = await users.aggregate(
-            [
-                {
-                    $match: {
-                        status: "InActive"
-                    }
-                },
-                {
-                    $count: "inActiveCount"
-                }
-            ],
-        )
-        console.log("mm", metaData4)
-        let male = metaData1[0]?.maleCount
-        let female = metaData2[0]?.femaleCount
-        let active = metaData3[0]?.activeCount
-        let inActive = metaData4[0]?.inActiveCount
-        res.status(200).json({ male, female, active, inActive })
-    } catch (error) {
-        console.log(error.message)
-        res.status(500).json(error)
     }
 }
 
