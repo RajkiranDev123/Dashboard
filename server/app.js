@@ -8,8 +8,9 @@ import router from "./Routes/index.js"
 import path from "path"
 import { fileURLToPath } from 'url'
 import rateLimit from "express-rate-limit"
-import cron from "node-cron"
-import { mail } from "./Controllers/sendEmail.js"
+// cron
+// import cron from "node-cron"
+// import { mail } from "./Controllers/sendEmail.js"
 
 dbConnection()
 const app = express()
