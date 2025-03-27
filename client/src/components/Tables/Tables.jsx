@@ -111,15 +111,25 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
           </Table>
           {/* pagination */}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <input value={pageNumber} onChange={(e) => setPageNo(e.target.value)} style={{ width: 89, outline: "none" }}
-                placeholder='Pg.No' type='number' />&nbsp;
+           {usersData?.length>0&& <div>
+              <input value={pageNumber} onChange={(e) => {
+                let temp=Number(e.target.value).toString()
+                if ( temp == "NaN") {
+                  return
+                } else {
+                  setPageNo(e.target.value)
+                }
 
-              <button onClick={() => setPage(pageNumber)} style={{ background: "red", border: "none", borderRadius: 3, color: "white", outline: "none" }}>Go</button>
+              }
+              }
+                style={{ width: 89, outline: "none" }}
+                placeholder='Pg.No' type='text' />&nbsp;
+
+              <button onClick={() => {if (!pageNumber=="")setPage(pageNumber)}} style={{ background: "red", border: "none", borderRadius: 3, color: "white", outline: "none" }}>Go</button>
               &nbsp;
               <button onClick={() => { setPage(1); setPageNo("") }} style={{ border: "none", background: "green", borderRadius: 3, color: "white", outline: "none" }}>Clear</button>
 
-            </div>
+            </div>}
 
             <Pagin handlePrevious={handlePrevious} handleNext={handleNext} setPage={setPage} page={page} pageCount={pageCount} />
           </div>

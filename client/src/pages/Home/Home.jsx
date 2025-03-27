@@ -282,10 +282,10 @@ const Home = () => {
           }}>
           {/* total  */}
           <div style={{
-            background: "#F5F5DC", padding: 4, borderRadius: 3,
+            background: "#F5F5DC", padding: 4, borderRadius: 3,width:180,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Total Users 🗑️</p>
+            <p style={{ color: "grey" }}>Total Users Added 🗑️</p>
             <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>
 
           </div>
@@ -378,7 +378,7 @@ const Home = () => {
 
             {/* sort by value starts */}
             <div className="filter_newold col-sm-12 col-md-12 col-lg-3" >
-              <h6 style={{ color: "brown" }} className='text-center'>Sort by Value</h6>
+              <h6 style={{ color: "white" }} className='text-center'>Sort by Value</h6>
 
               <Dropdown className='text-center'>
                 <Dropdown.Toggle className='dropdown_btn' id='dropdown-basic'>
@@ -494,7 +494,7 @@ const Home = () => {
 
       {/* footer starts */}
       <div style={{ textAlign: "center" }} >
-        <Button style={{ width: 350 }} onClick={exportcsv} variant='primary' className='export_button'>Export To CSV 📑</Button>
+        <Button style={{ width: 350 }} onClick={exportcsv} variant='danger' className='export_button'>Export To CSV 📑</Button>
       </div>
       <Footer />
 
