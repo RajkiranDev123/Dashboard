@@ -37,7 +37,6 @@ const Home = () => {
   const [filterThisMonth, setFilterThisMonth] = useState(false)
 
   const [meta, setMeta] = useState({})
-
   const navigate = useNavigate()
 
   //use the contexts
