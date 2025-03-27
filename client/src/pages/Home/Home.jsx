@@ -38,7 +38,6 @@ const Home = () => {
 
   const [meta, setMeta] = useState({})
 
-
   const navigate = useNavigate()
 
   //use the contexts
