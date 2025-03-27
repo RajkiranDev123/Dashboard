@@ -281,6 +281,15 @@ const Home = () => {
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
           }}>
+           {/* total  */}
+           <div style={{
+            background: "white", padding: 4, borderRadius: 3,
+            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+          }}>
+            <p style={{ color: "grey" }}>Total Users</p>
+            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>
+
+          </div>
 
           {/* this month : metaDataMonth */}
           <div style={{
