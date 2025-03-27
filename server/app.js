@@ -8,6 +8,8 @@ import router from "./Routes/index.js"
 import path from "path"
 import { fileURLToPath } from 'url'
 import rateLimit from "express-rate-limit"
+import cron from "node-cron"
+import { mail } from "./Controllers/sendEmail.js"
 
 dbConnection()
 const app = express()
@@ -43,6 +45,13 @@ app.use("/uploads", express.static('./uploads'))
 app.use("/csv/files", express.static("./csv/files"))
 
 app.use("/api/v1", router)
+
+// cron
+// const task=()=>{
+//   console.log(765)
+//   mail()
+// }
+// cron.schedule("* * * * *",task)
 
 
 // or :-> true then stop, false then go

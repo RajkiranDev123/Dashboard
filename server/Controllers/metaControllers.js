@@ -5,6 +5,7 @@ import { users } from "../models/usersSchema.js"
 //////////////////////////////////////////////////// meta ////////////////////////////////////////////////////////
 export const getMetaData = async (req, res) => {
     try {
+
         const metaData1 = await users.aggregate(
             [
                 {
@@ -82,6 +83,8 @@ export const getMetaDataAddedUsers = async (req, res) => {
         // first day of the current month
         var d = new Date();
         var fd = new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split("T")[0];
+        const totalDocs = await users.countDocuments()
+
 
         const metaDataToday = await users.countDocuments({
             dateCreated: {
@@ -101,7 +104,7 @@ export const getMetaDataAddedUsers = async (req, res) => {
                 $lt: tdstr + "T23:59:59Z"
             }
         })
-        res.status(200).json({ metaDataToday: metaDataToday, metaDataYesterday: metaDataYesterday, metaDataMonth: metaDataMonth })
+        res.status(200).json({ metaDataToday: metaDataToday, metaDataYesterday: metaDataYesterday, metaDataMonth: metaDataMonth, totalDocs: totalDocs })
     } catch (error) {
         console.log(error.message)
         res.status(500).json(error)

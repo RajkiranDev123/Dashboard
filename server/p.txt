@@ -27,3 +27,5 @@ git remote add origin https://github.com/RajkiranDev123/merncrud1.git
 git push -u origin main
 
 npm install express-rate-limit
+ npm i node-cron
+ npm i nodemailer
