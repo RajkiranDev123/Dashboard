@@ -282,7 +282,7 @@ const Home = () => {
           }}>
           {/* total  */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3,
+            background: "#F5F5DC", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Total Users 🗑️</p>
@@ -292,7 +292,7 @@ const Home = () => {
 
           {/* this month : metaDataMonth */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3,
+            background: "#F0EAD6", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added this Month 📅</p>
@@ -302,7 +302,7 @@ const Home = () => {
 
           {/* yesterday */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3,
+            background: "#FCF5E5", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added Yesterday ←</p>
@@ -312,7 +312,7 @@ const Home = () => {
 
           {/* today */}
           <div style={{
-            background: "white", padding: 4, borderRadius: 3, marginTop: 1,
+            background: "#E2DFD2", padding: 4, borderRadius: 3, marginTop: 1,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>Users Added Today ↑</p>
@@ -439,8 +439,8 @@ const Home = () => {
 
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
-              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between" }}>Filter by Date Range 📅<span>▼</span></p>
-              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between" }}>Filter By More Filters ← ↑ <span>▼</span></p>
+              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter by Date Range 📅<span>▼</span></p>
+              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
 
             </div>
 

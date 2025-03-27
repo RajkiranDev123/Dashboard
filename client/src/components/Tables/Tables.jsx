@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Row from "react-bootstrap/Row"
 import Card from "react-bootstrap/Card"
 import Table from "react-bootstrap/Table"
@@ -15,7 +15,7 @@ import Pagin from '../Pagination/Pagination'
 
 const Tables = ({ usersData, deleteUser, getAllUsers,
   handleNext, handlePrevious, page, pageCount, setPage }) => {
-
+  const [pageNumber, setPageNo] = useState("")
   // change status
   const updateStatus = async (id, status) => {
     const res = await changeStatus(id, status)
@@ -110,7 +110,20 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
             </tbody>
           </Table>
           {/* pagination */}
-          <Pagin handlePrevious={handlePrevious} handleNext={handleNext} setPage={setPage} page={page} pageCount={pageCount} />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <input value={pageNumber} onChange={(e) => setPageNo(e.target.value)} style={{ width: 89, outline: "none" }}
+                placeholder='Pg.No' type='number' />&nbsp;
+
+              <button onClick={() => setPage(pageNumber)} style={{ background: "red", border: "none", borderRadius: 3, color: "white", outline: "none" }}>Go</button>
+              &nbsp;
+              <button onClick={() => { setPage(1); setPageNo("") }} style={{ border: "none", background: "green", borderRadius: 3, color: "white", outline: "none" }}>Clear</button>
+
+            </div>
+
+            <Pagin handlePrevious={handlePrevious} handleNext={handleNext} setPage={setPage} page={page} pageCount={pageCount} />
+          </div>
+
 
         </Card>
 
