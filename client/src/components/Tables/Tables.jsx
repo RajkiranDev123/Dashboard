@@ -44,7 +44,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
                 <th>FullName</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>Status</th>
+                <th>Change Status</th>
                 <th>Profile</th>
                 <th>Action</th>
               </tr>

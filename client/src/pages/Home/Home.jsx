@@ -10,7 +10,7 @@ import Alert from "react-bootstrap/Alert"
 import { useNavigate } from 'react-router-dom'
 import moment from "moment"
 import Tables from "../../components/Tables/Tables"
-import { yesterdayDate,todayDate,monthDate } from '../../utilities/dates'
+import { yesterdayDate, todayDate, monthDate } from '../../utilities/dates'
 
 import Spiner from '../../components/Spiner/Spiner'
 
@@ -35,6 +35,11 @@ const Home = () => {
   const [filterToday, setFilterToday] = useState(false)
   const [filterYesterday, setFilterYesterday] = useState(false)
   const [filterThisMonth, setFilterThisMonth] = useState(false)
+
+  const [filterByDateRange, setFilterByDateRange] = useState(false)
+  const [moreFilter, setMoreFilter] = useState(false)
+
+
 
   const [meta, setMeta] = useState({})
   const navigate = useNavigate()
@@ -275,12 +280,12 @@ const Home = () => {
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
           }}>
-           {/* total  */}
-           <div style={{
+          {/* total  */}
+          <div style={{
             background: "white", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Total Users</p>
+            <p style={{ color: "grey" }}>Total Users 🗑️</p>
             <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>
 
           </div>
@@ -290,7 +295,7 @@ const Home = () => {
             background: "white", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added this Month</p>
+            <p style={{ color: "grey" }}>Users Added this Month 📅</p>
             <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataMonth}</p>
 
           </div>
@@ -300,7 +305,7 @@ const Home = () => {
             background: "white", padding: 4, borderRadius: 3,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added Yesterday</p>
+            <p style={{ color: "grey" }}>Users Added Yesterday ←</p>
             <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataYesterday}</p>
 
           </div>
@@ -310,7 +315,7 @@ const Home = () => {
             background: "white", padding: 4, borderRadius: 3, marginTop: 1,
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added Today</p>
+            <p style={{ color: "grey" }}>Users Added Today ↑</p>
             <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataToday}</p>
           </div>
 
@@ -332,9 +337,7 @@ const Home = () => {
 
             {/* export  starts*/}
 
-            <div className="export col-sm-12 col-md-12 col-lg-3 d-flex justify-content-center">
-              <Button onClick={exportcsv} variant='primary' className='export_button'>Export To CSV</Button>
-            </div>
+
 
             {/* export ends*/}
 
@@ -435,33 +438,40 @@ const Home = () => {
             {/* sort by status ends*/}
 
             {/* date range */}
+            <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
+              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between" }}>Filter by Date Range 📅<span>▼</span></p>
+              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between" }}>Filter By More Filters ← ↑ <span>▼</span></p>
+
+            </div>
+
+
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", width: "100%", padding: 5, alignItems: "center", marginTop: 3, borderRadius: 4, gap: 5 }}>
-              <div style={{ border: "0px outset grey", borderRadius: 4, padding: 2, background: "white", }}>
+              {filterByDateRange && <div style={{ border: "0px outset grey", borderRadius: 4, padding: 2, background: "white", }}>
                 <p style={{ fontWeight: "", color: "red", marginLeft: 26 }}>Filter By Date-Range :</p>
                 <DateRange setDateRange={setDateRange} />
-              </div>
+              </div>}
 
-              <div style={{ background: "white", width: 320, height: 356, padding: 3, borderRadius: 3, overflowY: "scroll" }}>
+              {moreFilter && <div style={{ background: "white", width: 320, height: 356, padding: 3, borderRadius: 3, overflowY: "scroll" }}>
                 <p style={{ color: "red" }}>&nbsp;More Filters :</p>
-                <p style={{fontWeight:"bold",textAlign:"center"}}>{dateRange}</p>
+                <p style={{ fontWeight: "bold", textAlign: "center" }}>{dateRange}</p>
 
                 <br /><br />
                 <p onClick={() => filterByToday()} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterToday ? "black" : "white", cursor: "pointer", fontWeight: "bold"
-                }}>Filter by Today</p>
+                  padding: 2, borderRadius: 3, background: "grey", color: filterToday ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by Today ↑</p>
                 <br />
                 <p onClick={() => { filterByYesterday() }} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterYesterday ? "black" : "white", cursor: "pointer", fontWeight: "bold"
-                }}>Filter by Yesterday</p>
+                  padding: 2, borderRadius: 3, background: "grey", color: filterYesterday ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by Yesterday ←</p>
                 <br />
                 <p onClick={() => { filterByThisMonth() }} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterThisMonth ? "black" : "white", cursor: "pointer", fontWeight: "bold"
-                }}>Filter by This Month</p>
+                  padding: 2, borderRadius: 3, background: "grey", color: filterThisMonth ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                }}>Filter by This Month 📅</p>
                 {/* <br /> */}
-                <button onClick={() => { clearAll() }} style={{ background: "blue", borderRadius: 3, border: "none", width: "100%", color: "white" }}>Clear All</button>
+                <button onClick={() => { clearAll() }} style={{ background: "#0E3386", borderRadius: 3, border: "none", width: "100%", color: "white" }}>Clear All</button>
 
 
-              </div>
+              </div>}
 
             </div>
             {/* date range ends */}
@@ -483,6 +493,9 @@ const Home = () => {
       {/* table ends*/}
 
       {/* footer starts */}
+      <div style={{ textAlign: "center" }} >
+        <Button style={{ width: 350 }} onClick={exportcsv} variant='primary' className='export_button'>Export To CSV 📑</Button>
+      </div>
       <Footer />
 
     </div>
