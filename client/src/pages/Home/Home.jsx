@@ -36,10 +36,6 @@ const Home = () => {
   const [filterYesterday, setFilterYesterday] = useState(false)
   const [filterThisMonth, setFilterThisMonth] = useState(false)
 
-
-
-
-
   const [meta, setMeta] = useState({})
 
 
