@@ -1,6 +1,6 @@
 
 import { users } from "../models/usersSchema.js"
-
+import { getMonthDateRanges } from "../utilities/monthsMeta.js"
 
 //////////////////////////////////////////////////// meta ////////////////////////////////////////////////////////
 export const getMetaData = async (req, res) => {
@@ -107,6 +107,108 @@ export const getMetaDataAddedUsers = async (req, res) => {
         res.status(200).json({ metaDataToday: metaDataToday, metaDataYesterday: metaDataYesterday, metaDataMonth: metaDataMonth, totalDocs: totalDocs })
     } catch (error) {
         console.log(error.message)
+        res.status(500).json(error)
+    }
+}
+
+//////////////////////////////
+
+export const getMetaMonths = async (req, res) => {
+    try {
+
+        const jan = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().January.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().January.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const feb = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().February.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().February.lastDay + "T23:59:59Z"
+            }
+        })
+        const mar = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().March.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().March.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const apr = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().April.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().April.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const may = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().May.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().May.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const june = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().June.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().June.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const july = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().July.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().July.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const august = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().August.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().August.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const sep = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().September.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().September.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const oct = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().October.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().October.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const nov = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().November.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().November.lastDay + "T23:59:59Z"
+            }
+        })
+
+        const dec = await users.countDocuments({
+            dateCreated: {
+                $gte: getMonthDateRanges().December.firstDay + "T00:00:00Z",
+                $lt: getMonthDateRanges().December.lastDay + "T23:59:59Z"
+            }
+        })
+
+        res.status(200).json({
+            metaMonths: {
+                january: jan, february: feb, march: mar,
+                april: apr, may: may, june: june, july: july, august: august, september: sep,
+                october: oct, november: nov, december: dec
+
+            }
+        })
+    } catch (error) {
+
         res.status(500).json(error)
     }
 }
