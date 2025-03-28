@@ -2,6 +2,7 @@ import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useState, useEffect } from 'react';
 import { getMeta } from '../../services/ApiRequests';
+import BarGraph from './BarGraph';
 
 export default function BasicBars2() {
 
@@ -22,8 +23,9 @@ export default function BasicBars2() {
     getMetaData()
   }, [])
 
-  return (
-    <div style={{ display: "flex" }}>
+  return (<>
+    <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
+
       <PieChart
         series={[
           {
@@ -34,9 +36,14 @@ export default function BasicBars2() {
             ],
           },
         ]}
-        width={400}
+        width={320}
         height={200}
       />
+      {/*  */}
+      <BarGraph />
+
+
+
       {/*  */}
       <PieChart
         series={[
@@ -48,11 +55,14 @@ export default function BasicBars2() {
             ],
           },
         ]}
-        width={400}
+        width={320}
         height={200}
       />
 
+
+
     </div>
 
-  );
+
+  </>);
 }

@@ -40,6 +40,12 @@ export const getMeta = async () => {
     // wrapper will return something and also changeStatus will also need to return
 }
 
+export const getMetaMonths = async () => {
+
+    return await wrapper("GET", `${BASE_URL}/api/v1/meta/getMetaMonths`, "", "")
+    // wrapper will return something and also changeStatus will also need to return
+}
+
 export const getMetaAddedUsers = async () => {
 
     return await wrapper("GET", `${BASE_URL}/api/v1/meta/getMetaDataAddedUsers`, "", "")
