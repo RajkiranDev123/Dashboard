@@ -246,12 +246,12 @@ const Home = () => {
           </p>
           <div style={{ display: "flex" }}>
             {/* hide all */}
-            <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+            <p style={{ fontWeight: "", display: "flex", gap: 2, marginLeft: 5 }}>
               <span style={{ color: "white" }}>Hide All</span>
               <button onClick={() => hideAll()}
                 style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▲"}</button>
             </p>
-            <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+            <p style={{ fontWeight: "", display: "flex", gap: 2, marginLeft: 5 }}>
               <span style={{ color: "white" }}>Show All</span>
               <button onClick={() => showAll()}
                 style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▼"}</button>
@@ -439,8 +439,8 @@ const Home = () => {
 
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
-              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter by Date Range 📅<span>▼</span></p>
-              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "#0E3386", color: "white", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
+              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter by Date Range 📅<span>▼</span></p>
+              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
 
             </div>
 
