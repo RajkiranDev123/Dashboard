@@ -202,7 +202,7 @@ const Home = () => {
         <Alert variant='success' onClose={() => setUpdate("")} dismissible>{update.fname} is updated!</Alert> : ""
     }
 
-    <Headers headerName="Dashboard" />
+    <Headers headerName="Users Dashboard" />
     {/* container */}
     <div className=" p-2 " style={{ border: "0px solid red", background: "#2c3968" }}>
       {/* main */}
@@ -263,7 +263,7 @@ const Home = () => {
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
             boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
           }}>
-          <Suspense fallback={<p>wait...........</p>}>
+          <Suspense fallback={<p style={{color:"white"}}>wait.....</p>}>
             <BasicBars2 />
           </Suspense>
         </div>}

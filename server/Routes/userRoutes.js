@@ -9,7 +9,7 @@ import { upload } from "../multerConfig/storageConfig.js"
 const router = new express.Router()
 //or const router =new Router()
 
-//userRegister
+//userRegister :b_url/api/v1/users/register
 router.post("/register", upload.single("user_profile"), userRegister)
 
 //get all users

@@ -19,6 +19,7 @@ import Headers from "../../components/Headers/Headers"
 import { registerUser } from "../../services/ApiRequests"
 //context api
 import { addData } from "../../components/context/contextProvider"
+import Spiner from '../../components/Spiner/Spiner';
 
 const Register = () => {
   const [inputData, setInputData] = useState({ fname: "", lname: "", email: "", mobile: "", gender: "", location: "" })
@@ -26,6 +27,8 @@ const Register = () => {
 
   const [image, setImage] = useState("")
   const [preview, setPreview] = useState("")
+
+  const [spin, setSpin] = useState(false)
 
   const navigate = useNavigate()
   const { setUserAdd } = useContext(addData)
@@ -92,11 +95,13 @@ const Register = () => {
       console.log("Form Data before submit ==>", data)
 
       const config = { "Content-Type": "multipart/form-data" }
-
+      setSpin(true)
       const response = await registerUser(data, config)
       console.log("response after submit ==>", response)
       if (response?.status === 201) {
         setInputData({ ...inputData, fname: "", lname: "", email: "", mobile: "", gender: "", location: "" })
+        setSpin(false)
+
         // context
         setUserAdd(response?.data)
         setStatus("")
@@ -118,16 +123,17 @@ const Register = () => {
 
   return (
     <>
+    <div style={{ border: "0px dashed red" ,background:"#71797E",height:"100vh"}}>
       {/* header */}
       <Headers headerName="Register" />
 
       <ToastContainer />
 
       {/* container */}
-      <div style={{ border: "0px dashed red" }} className="container mt-1 p-4">
+      <div style={{ border: "0px dashed red" ,background:"#71797E"}} className="container mt-1 p-4">
 
         {/* heading */}
-        <h2 className='text-center mt-1'>Register</h2>
+        <h2 className='text-center mt-1' style={{color:"white"}}>Register</h2>
 
         {/* card */}
         <Card style={{ border: "0px solid blue" }} className='shadow mt-3 p-3'>
@@ -210,7 +216,8 @@ const Register = () => {
               </Form.Group>
 
               <Button variant="primary" type="submit" onClick={submitUserData}>
-                Submit
+                {spin ? <Spiner /> : "Submit"}
+           
               </Button>
 
 
@@ -220,7 +227,7 @@ const Register = () => {
         {/* card ends*/}
       </div>
       {/* container ends*/}
-
+      </div>
     </>
   )
 }

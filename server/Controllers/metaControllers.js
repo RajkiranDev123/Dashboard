@@ -54,7 +54,7 @@ export const getMetaData = async (req, res) => {
                 }
             ],
         )
-        console.log("mm", metaData4)
+        // console.log("mm", metaData4)
         let male = metaData1[0]?.maleCount
         let female = metaData2[0]?.femaleCount
         let active = metaData3[0]?.activeCount
@@ -73,7 +73,7 @@ export const getMetaDataAddedUsers = async (req, res) => {
         const timeElapsed = Date.now();
         const tdobj = new Date(timeElapsed);
         const tdstr = tdobj.toISOString().split("T")[0];
-        console.log(tdstr)
+        // console.log(tdstr)
 
         //yesterday
         let date = new Date();
@@ -111,7 +111,7 @@ export const getMetaDataAddedUsers = async (req, res) => {
     }
 }
 
-//////////////////////////////
+////////////////////////////// getMetaMonths ////////////////////////////////////////////////////////////
 
 export const getMetaMonths = async (req, res) => {
     try {

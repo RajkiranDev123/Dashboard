@@ -8,7 +8,7 @@ import router from "./Routes/index.js"
 import path from "path"
 import { fileURLToPath } from 'url'
 import rateLimit from "express-rate-limit"
-// cron
+// cron job
 // import cron from "node-cron"
 // import { mail } from "./Controllers/sendEmail.js"
 
@@ -17,8 +17,8 @@ const app = express()
 
 // rate limiting : securing api's
 const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 50,
+    windowMs: 1 * 60 * 1000,//within 1 min
+    max: 50,//50 reqs
     handler: function(req, res) {
       res.status(429).json("Too many requests!");
     },
@@ -49,7 +49,7 @@ app.use("/api/v1", router)
 
 // cron
 // const task=()=>{
-//   console.log(765)
+
 //   mail()
 // }
 // cron.schedule("* * * * *",task)

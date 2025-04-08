@@ -9,7 +9,7 @@ export const userRegister = async (req, res) => {
     const file = req?.file?.filename
     const { fname, lname, email, mobile, gender, location, status } = req.body
     if (!fname || !lname || !email || !mobile || !gender || !location || !status || !file) {
-        return res.status(400).json("all fields are required!")
+        return res.status(400).json("All fields are required!")
     }
     try {
         let user = await users.findOne({ email: email })
@@ -32,7 +32,7 @@ export const userRegister = async (req, res) => {
             return res.status(201).json(userData)
         }
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         return res.status(500).json(error.message)
     }
 }
@@ -103,7 +103,7 @@ export const editUser = async (req, res) => {
     try {
         let uploadImage
         if (filename.startsWith('img')) {
-            console.log(true)
+            // console.log(true)
             uploadImage = await uploadOnCloudinary(process.cwd() + "/uploads/" + filename)
             if (!uploadImage) {
                 return res.status(500).json({ message: "profile image not uploaded! plz try again!" })
@@ -133,7 +133,7 @@ export const editUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     const { id } = req.params
-    console.log(id)
+    // console.log(id)
     try {
         const deletedData = await users.findByIdAndDelete({ _id: id })
         res.status(200).json(deletedData)
@@ -170,24 +170,21 @@ export const exportCsv = async (req, res) => {
         )
         csvStream.pipe(writableStream)
         writableStream.on("finish", () => {
-            res.status(200).json({ downloadUrl: `http://localhost:3000/csv/files/users.csv` })
+            res.status(200).json({ downloadUrl: `${process.env.b_url}/csv/files/users.csv` })
         })
         if (usersData.length > 0) {
             usersData.map(e => {
                 csvStream.write({
                     Firstname: e.fname ? e.fname : "-",
                     Lastname: e.lname ? e.lname : "-",
-
                     Mobile: e.mobile ? e.mobile : "-",
-
-
                 })
             })
         }
         csvStream.end()
         writableStream.end()
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(500).json(error.message)
     }
 }

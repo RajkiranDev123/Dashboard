@@ -17,9 +17,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchSingleUser, editUser } from '../../services/ApiRequests';
 
 import { updateData } from "../../components/context/contextProvider"
-
+import Spiner from '../../components/Spiner/Spiner';
 const Edit = () => {
   const navigate = useNavigate()
+  const [spin, setSpin] = useState(false)
   const { id } = useParams()//<Route path='/edit/:id' element={<Edit />} />
   const { update, setUpdate } = useContext(updateData)
   // set the value of context here and used in home
@@ -101,9 +102,10 @@ const Edit = () => {
       data.append("location", location)
       console.log("data", data)
       const config = { "Content-Type": "multipart/form-data", "img-name": imgTemp?.split("/") }
-
+      setSpin(true)
       const response = await editUser(id, data, config)
       if (response?.status == 200) {
+        setSpin(false)
         setUpdate(response?.data)
         navigate("/")
       }
@@ -215,7 +217,7 @@ const Edit = () => {
               </Form.Group>
 
               <Button variant="primary" type="submit" onClick={submitUserData}>
-                Submit
+                {spin ? <Spiner /> : "Submit"}
               </Button>
 
             </Row>

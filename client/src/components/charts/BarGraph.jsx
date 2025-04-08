@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 // import { dataset, valueFormatter } from '../dataset/weather';
 import { getMetaMonths } from '../../services/ApiRequests';
-
+import Spiner2 from '../Spiner/Spiner2';
 const chartSetting = {
     xAxis: [
         {
@@ -14,15 +14,18 @@ const chartSetting = {
 };
 
 function BarGraph() {
+    const [spin, setSpin] = React.useState(false)
+
     const [metaMonths, setMetaMonths] = React.useState({})
     const [dataSet, setDataSet] = React.useState([])
 
 
     const getMetaData = async () => {
-
+        setSpin(true)
         const response = await getMetaMonths()
 
         if (response.status == 200) {
+            setSpin(false)
 
             setMetaMonths(response?.data?.metaMonths)
             setDataSet([
@@ -107,14 +110,14 @@ function BarGraph() {
     }
 
     return (<>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-            <BarChart
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {spin ? <Spiner2 /> : <BarChart
                 dataset={dataSet}
                 yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
                 series={[{ dataKey: 'seoul', label: 'Users Added', valueFormatter }]}
                 layout="horizontal"
                 {...chartSetting}
-            />
+            />}
         </div>
 
     </>

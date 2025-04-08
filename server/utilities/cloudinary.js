@@ -11,7 +11,7 @@ cloudinary.config({
 
 ///////////////////////////////////////// server/uploads/image2536.jpg
 export const uploadOnCloudinary = async (localFilePath) => {
-    console.log(localFilePath)
+    // console.log(localFilePath)
     try {
         if (!localFilePath) return null
         const response = await cloudinary.uploader.upload(localFilePath, { resource_type: "auto" })
