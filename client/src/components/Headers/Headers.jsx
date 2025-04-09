@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
 
 const Headers = ({ headerName }) => {
-  console.log("i am from headers")
+
   const navigate = useNavigate()
   const goToHome = () => {
     navigate("/")

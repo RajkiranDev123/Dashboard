@@ -29,6 +29,7 @@ const BasicBars2 = React.lazy(() => import("../../components/charts/barChart2"))
 
 const Home = () => {
   const [showSpin, setShowSpin] = useState(true)
+
   const [filterHideShow, setFilterHideShow] = useState(true)
   const [chartsHideShow, setChartsHideShow] = useState(true)
   const [usersAddedHideShow, setUsersAddedHideShow] = useState(true)
@@ -43,6 +44,7 @@ const Home = () => {
   const [spin, setSpin] = useState(false)
 
   const [meta, setMeta] = useState({})
+  
   const navigate = useNavigate()
 
   //use the contexts
