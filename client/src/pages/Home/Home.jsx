@@ -8,7 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import Row from "react-bootstrap/Row"
 import Alert from "react-bootstrap/Alert"
 import { useNavigate } from 'react-router-dom'
-import moment from "moment"
+
 import Tables from "../../components/Tables/Tables"
 import { yesterdayDate, todayDate, monthDate } from '../../utilities/dates'
 
@@ -22,6 +22,7 @@ import { toast } from 'react-toastify'
 import Footer from '../../components/Footer/Footer'
 
 import DateRange from "../../components/DateRange/DateRange"
+import Spiner2 from '../../components/Spiner/Spiner2'
 
 const BasicBars2 = React.lazy(() => import("../../components/charts/barChart2"))
 
@@ -39,7 +40,7 @@ const Home = () => {
   const [filterByDateRange, setFilterByDateRange] = useState(false)
   const [moreFilter, setMoreFilter] = useState(false)
 
-
+  const [spin, setSpin] = useState(false)
 
   const [meta, setMeta] = useState({})
   const navigate = useNavigate()
@@ -130,11 +131,12 @@ const Home = () => {
 
   // meta usersAdded
   const getMetaDataUsersAdded = async () => {
-
+    setSpin(true)
     const response = await getMetaAddedUsers()
 
     if (response.status == 200) {
       setMeta(response.data)
+      setSpin(false)
     } else {
       console.log("failed to fetch")
     }
@@ -238,7 +240,7 @@ const Home = () => {
         {/* search & add  ends*/}
 
         {/* charts */}
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px " }}>
           <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
             <span style={{ color: "white" }}>Charts</span>
             <button onClick={() => setChartsHideShow(!chartsHideShow)}
@@ -261,14 +263,16 @@ const Home = () => {
         {chartsHideShow && <div className="search_add m-2 p-2"
           style={{
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-          <Suspense fallback={<p style={{color:"white"}}>wait.....</p>}>
+          <Suspense fallback={<p style={{ color: "white" }}>wait.....</p>}>
             <BasicBars2 />
           </Suspense>
         </div>}
         {/* charts ends */}
+
         {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
         {/* users added details */}
         <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
           <span style={{ color: "white" }}>Users Added</span>
@@ -277,46 +281,46 @@ const Home = () => {
         </p>
         {usersAddedHideShow && <div className="search_add m-2 p-2 d-flex justify-content-around align-items-center flex-wrap"
           style={{
-            border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
+            border: "0px outset brown", borderRadius: 4,
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
           {/* total  */}
           <div style={{
-            background: "#F5F5DC", padding: 4, borderRadius: 3,width:180,
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center",
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Total Users Added 🗑️</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>
+            <p style={{ color: "grey" }}>🗑️ Total Users : </p>
+            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>}
 
           </div>
 
           {/* this month : metaDataMonth */}
           <div style={{
-            background: "#F0EAD6", padding: 4, borderRadius: 3,
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+            background: "#F0EAD6", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added this Month 📅</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataMonth}</p>
+            <p style={{ color: "grey" }}>📅 Added this Month : </p>
+            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataMonth}</p>}
 
           </div>
 
           {/* yesterday */}
           <div style={{
-            background: "#FCF5E5", padding: 4, borderRadius: 3,
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+            background: "#FCF5E5", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added Yesterday ←</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataYesterday}</p>
+            <p style={{ color: "grey" }}>← Added Yesterday :</p>
+            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataYesterday}</p>}
 
           </div>
 
           {/* today */}
           <div style={{
-            background: "#E2DFD2", padding: 4, borderRadius: 3, marginTop: 1,
-            boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(12, 10, 121, 0.3) 0px 8px 16px -8px "
+            background: "#E2DFD2", padding: 2, borderRadius: 3, marginTop: 1, display: "flex", justifyContent: "center", alignItems: "center",
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>Users Added Today ↑</p>
-            <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataToday}</p>
+            <p style={{ color: "grey" }}>↑ Added Today :</p>
+            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataToday}</p>}
           </div>
 
         </div>}
@@ -331,9 +335,9 @@ const Home = () => {
           <button onClick={() => setFilterHideShow(!filterHideShow)}
             style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{filterHideShow ? "▼" : "▲"}</button>
         </p>
-        {filterHideShow && <Row className='m-2 p-2' style={{ border: "2px outset black", borderRadius: 4, background: "#899499" }}>
+        {filterHideShow && <Row className='p-2' style={{ border: "2px outset black", borderRadius: 4, background: "#899499" }}>
 
-          <div className="filters_div mt-5 d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid green" }}>
+          <div className="filters_div d-flex justify-content-between align-items-center flex-wrap" style={{ border: "0px solid green" }}>
 
             {/* export  starts*/}
 
@@ -439,8 +443,8 @@ const Home = () => {
 
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
-              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter by Date Range 📅<span>▼</span></p>
-              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between",height:39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
+              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between", height: 39 }}>Filter by Date Range 📅<span>▼</span></p>
+              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between", height: 39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
 
             </div>
 

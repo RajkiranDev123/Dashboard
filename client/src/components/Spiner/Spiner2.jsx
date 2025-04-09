@@ -6,7 +6,7 @@ const Spiner2 = () => {
     return (
         <>
 
-            <Spinner animation="border" variant="danger" />
+            <Spinner  animation="border" variant="danger" />
 
 
         </>
