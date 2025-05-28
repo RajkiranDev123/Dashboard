@@ -288,7 +288,7 @@ const Home = () => {
           }}>
           {/* total  */}
           <div style={{
-            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center",
+            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center",margin:1,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>🗑️ Total Users : </p>
@@ -463,15 +463,15 @@ const Home = () => {
 
                 <br /><br />
                 <p onClick={() => filterByToday()} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterToday ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                  padding: 2, borderRadius: 3, background: "black", color: filterToday ? "grey" : "white", cursor: "pointer", fontWeight: "bold"
                 }}>Filter by Today ↑</p>
                 <br />
                 <p onClick={() => { filterByYesterday() }} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterYesterday ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                  padding: 2, borderRadius: 3, background: "black", color: filterYesterday ? "grey" : "white", cursor: "pointer", fontWeight: "bold"
                 }}>Filter by Yesterday ←</p>
                 <br />
                 <p onClick={() => { filterByThisMonth() }} style={{
-                  padding: 2, borderRadius: 3, background: "grey", color: filterThisMonth ? "#0E3386" : "white", cursor: "pointer", fontWeight: "bold"
+                  padding: 2, borderRadius: 3, background: "black", color: filterThisMonth ? "grey" : "white", cursor: "pointer", fontWeight: "bold"
                 }}>Filter by This Month 📅</p>
                 {/* <br /> */}
                 <button onClick={() => { clearAll() }} style={{ background: "#0E3386", borderRadius: 3, border: "none", width: "100%", color: "white" }}>Clear All</button>

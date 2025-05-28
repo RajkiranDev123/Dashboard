@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row"
 import Card from "react-bootstrap/Card"
 import Table from "react-bootstrap/Table"
 import Dropdown from "react-bootstrap/Dropdown"
+import Spiner2 from '../Spiner/Spiner2'
 
 import "./table.css"
 import moment from "moment";
@@ -12,6 +13,7 @@ import { changeStatus } from '../../services/ApiRequests'
 import { ToastContainer, toast } from 'react-toastify';
 
 import Pagin from '../Pagination/Pagination'
+import Spiner from '../Spiner/Spiner'
 
 const Tables = ({ usersData, deleteUser, getAllUsers,
   handleNext, handlePrevious, page, pageCount, setPage }) => {
@@ -28,9 +30,9 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
   }
   const navigate = useNavigate()
 
-  return (
-    // container
-    <div className="container mt-2 p-3" style={{ border: "0px solid red" }}>
+  return (<>
+  
+  { usersData.length>0 ? <div className="container mt-2 p-3" style={{ border: "0px solid red" }}>
       <Row className='p-1' style={{ border: "0px solid blue" }}>
 
         <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 400 }}>
@@ -142,9 +144,9 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
       {/* row ends */}
       <ToastContainer />
 
-    </div>
-    // continer ends
-  )
+    </div>:<Spiner/>}
+ 
+  </>)
 }
 
 export default Tables
