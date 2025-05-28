@@ -126,6 +126,8 @@ const Home = () => {
     if (response?.status == 200) {
       setUsersData(response?.data?.usersData)
       setPageCount(response?.data?.pagination?.pageCount)
+      let jump=document.getElementById("jumpTable")
+      jump.scrollIntoView({behavior:"smooth"})
     } else {
       console.log("failed to fetch")
     }
