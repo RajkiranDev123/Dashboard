@@ -29,7 +29,7 @@ export default function BasicBars2() {
   }, [])
 
   return (<>
-    <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap",alignItems:"center" }}>
+    <div  style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap",alignItems:"center" }}>
 
      { spin?<Spiner2/>:<PieChart
         series={[

@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "./App.css"
 import Home from "./pages/Home/Home"
 import Register from "./pages/Register/Register"
 import Edit from "./pages/Edit/Edit"

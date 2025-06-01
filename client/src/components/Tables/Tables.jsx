@@ -32,7 +32,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
 
   return (<>
   
-  { usersData.length>0 ? <div id="jumpTable" className="container mt-2 p-3" style={{ border: "0px solid red" }}>
+  { usersData.length>0 ? <div  id="jumpTable" className="container mt-2 p-3 ann" style={{ border: "0px solid red" }}>
       <Row className='p-1' style={{ border: "0px solid blue" }}>
 
         <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 400 }}>

@@ -44,7 +44,7 @@ const Home = () => {
   const [spin, setSpin] = useState(false)
 
   const [meta, setMeta] = useState({})
-  
+
   const navigate = useNavigate()
 
   //use the contexts
@@ -126,8 +126,8 @@ const Home = () => {
     if (response?.status == 200) {
       setUsersData(response?.data?.usersData)
       setPageCount(response?.data?.pagination?.pageCount)
-      let jump=document.getElementById("jumpTable")
-      jump.scrollIntoView({behavior:"smooth"})
+      let jump = document.getElementById("jumpTable")
+      jump.scrollIntoView({ behavior: "smooth" })
     } else {
       console.log("failed to fetch")
     }
@@ -289,8 +289,8 @@ const Home = () => {
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
           {/* total  */}
-          <div style={{
-            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center",margin:1,
+          <div className='ann' style={{
+            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center", margin: 1,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>🗑️ Total Users : </p>
@@ -299,7 +299,7 @@ const Home = () => {
           </div>
 
           {/* this month : metaDataMonth */}
-          <div style={{
+          <div className='ann' style={{
             background: "#F0EAD6", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
@@ -309,7 +309,7 @@ const Home = () => {
           </div>
 
           {/* yesterday */}
-          <div style={{
+          <div className='ann' style={{
             background: "#FCF5E5", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
@@ -319,7 +319,7 @@ const Home = () => {
           </div>
 
           {/* today */}
-          <div style={{
+          <div className='ann' style={{
             background: "#E2DFD2", padding: 2, borderRadius: 3, marginTop: 1, display: "flex", justifyContent: "center", alignItems: "center",
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
