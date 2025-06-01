@@ -32,7 +32,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
 
   return (<>
   
-  { usersData.length>0 ? <div  id="jumpTable" className="container mt-2 p-3 ann" style={{ border: "0px solid red" }}>
+  <div  id="jumpTable" className="container mt-2 p-3 ann" style={{ border: "0px solid red" }}>
       <Row className='p-1' style={{ border: "0px solid blue" }}>
 
         <Card className='shadow' style={{ overflowX: "scroll", overflowY: "unset", height: 400 }}>
@@ -106,7 +106,7 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
 
                     </tr>
                   </>
-                }) : <div className='d-flex justify-content-center'>No data found!</div>
+                }) : <div  className='d-flex justify-content-center'>No data found!</div>
               }
 
             </tbody>
@@ -144,7 +144,8 @@ const Tables = ({ usersData, deleteUser, getAllUsers,
       {/* row ends */}
       <ToastContainer />
 
-    </div>:<Spiner/>}
+    </div>
+    {/* :<div style={{height:6}}><Spiner/></div>} */}
  
   </>)
 }

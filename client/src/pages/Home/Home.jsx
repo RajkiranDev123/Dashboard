@@ -358,7 +358,7 @@ const Home = () => {
             {/* export ends*/}
 
             {/* gender */}
-            <div className="filter_gender col-sm-12 col-md-12 col-lg-3"
+            <div className="filter_gender col-sm-12 col-md-12 col-lg-3 ann2"
               style={{
                 border: "0px solid red", borderBottomRightRadius:13, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
@@ -415,7 +415,7 @@ const Home = () => {
             {/* sort by value ends*/}
 
             {/* sort by status */}
-            <div className="filter_status col-sm-12 col-md-12 col-lg-3"
+            <div className="filter_status col-sm-12 col-md-12 col-lg-3 ann2"
               style={{
                 border: "0px solid red", borderBottomLeftRadius:12, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
@@ -454,7 +454,7 @@ const Home = () => {
             {/* sort by status ends*/}
 
             {/* date range */}
-            <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
+            <div className='ann2' style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
               <p onClick={() => setFilterByDateRange(!filterByDateRange)}
                 style={{ background: "white", color: "black", padding: 3, borderTopLeftRadius: 13, cursor: "pointer", width: 142, display: "flex", justifyContent: "space-between", height: 39, fontWeight: "bold" }}>
                 Date Range 📅<span style={{ color: "brown" }}>▼</span></p>
@@ -510,7 +510,7 @@ const Home = () => {
         />
       }
       {/* table ends*/}
-
+   <br/>
       {/* footer starts */}
       <div style={{ textAlign: "center" }} >
         <Button style={{ width: 350 }} onClick={exportcsv} variant='danger' className='export_button'>Export To CSV 📑</Button>
