@@ -290,41 +290,49 @@ const Home = () => {
           }}>
           {/* total  */}
           <div className='ann' style={{
-            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, display: "flex", justifyContent: "center", alignItems: "center", margin: 1,
+            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180,  margin: 1,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>🗑️ Total Users : </p>
-            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.totalDocs}</p>}
+            <p style={{ color: "grey" ,textAlign:"center"}}>🗑️ Total Users  </p>
+            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+             <p>{meta?.totalDocs}</p> 
+              </p>}
 
           </div>
 
           {/* this month : metaDataMonth */}
           <div className='ann' style={{
-            background: "#F0EAD6", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
+            background: "#F0EAD6", padding: 2, borderRadius: 3,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>📅 Added this Month : </p>
-            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataMonth}</p>}
+            <p style={{ color: "grey",textAlign:"center" }}>📅 Added this Month  </p>
+            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+             <p>{meta?.metaDataMonth}</p> 
+              </p>}
 
           </div>
 
           {/* yesterday */}
           <div className='ann' style={{
-            background: "#FCF5E5", padding: 2, borderRadius: 3, display: "flex", justifyContent: "center", alignItems: "center",
+            background: "#FCF5E5", padding: 2, borderRadius: 3,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" }}>← Added Yesterday :</p>
-            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataYesterday}</p>}
+            <p style={{ color: "grey",textAlign:"center" }}>← Added Yesterday :</p>
+            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+              <p>{meta?.metaDataYesterday}</p>
+              </p>}
 
           </div>
 
           {/* today */}
           <div className='ann' style={{
-            background: "#E2DFD2", padding: 2, borderRadius: 3, marginTop: 1, display: "flex", justifyContent: "center", alignItems: "center",
+            background: "#E2DFD2", padding: 2, borderRadius: 3, marginTop: 1,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>↑ Added Today :</p>
-            {spin ? <Spiner2 /> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{meta?.metaDataToday}</p>}
+            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div>: <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+              <p>{meta?.metaDataToday}</p>
+              </p>}
           </div>
 
         </div>}
@@ -385,7 +393,7 @@ const Home = () => {
             {/* gender ends*/}
 
             {/* sort by value starts */}
-            <div className="filter_newold col-sm-12 col-md-12 col-lg-3" >
+            <div className="filter_newold col-sm-12 col-md-12 col-lg-3 ann" >
               <h6 style={{ color: "white" }} className='text-center'>Sort by Value</h6>
 
               <Dropdown className='text-center'>
