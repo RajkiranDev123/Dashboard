@@ -255,12 +255,12 @@ const Home = () => {
             <p style={{ fontWeight: "", display: "flex", gap: 2, marginLeft: 5 }}>
               <span style={{ color: "white" }}>Hide All</span>
               <button onClick={() => hideAll()}
-                style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▲"}</button>
+                style={{ border: "none", fontWeight: "bold", background: "white", color: "red", borderRadius: 4 }}>{"▲"}</button>
             </p>
             <p style={{ fontWeight: "", display: "flex", gap: 2, marginLeft: 5 }}>
               <span style={{ color: "white" }}>Show All</span>
               <button onClick={() => showAll()}
-                style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{"▼"}</button>
+                style={{ border: "none", fontWeight: "bold", background: "white", color: "green", borderRadius: 4 }}>{"▼"}</button>
             </p>
           </div>
         </div>
@@ -290,13 +290,13 @@ const Home = () => {
           }}>
           {/* total  */}
           <div className='ann' style={{
-            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180,  margin: 1,
+            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, margin: 1,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey" ,textAlign:"center"}}>🗑️ Total Users  </p>
-            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
-             <p>{meta?.totalDocs}</p> 
-              </p>}
+            <p style={{ color: "grey", textAlign: "center" }}>🗑️ Total Users  </p>
+            {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+              <p>{meta?.totalDocs}</p>
+            </p>}
 
           </div>
 
@@ -305,10 +305,10 @@ const Home = () => {
             background: "#F0EAD6", padding: 2, borderRadius: 3,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey",textAlign:"center" }}>📅 Added this Month  </p>
-            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
-             <p>{meta?.metaDataMonth}</p> 
-              </p>}
+            <p style={{ color: "grey", textAlign: "center" }}>📅 Added this Month  </p>
+            {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+              <p>{meta?.metaDataMonth}</p>
+            </p>}
 
           </div>
 
@@ -317,10 +317,10 @@ const Home = () => {
             background: "#FCF5E5", padding: 2, borderRadius: 3,
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
-            <p style={{ color: "grey",textAlign:"center" }}>← Added Yesterday :</p>
-            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+            <p style={{ color: "grey", textAlign: "center" }}>← Added Yesterday :</p>
+            {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
               <p>{meta?.metaDataYesterday}</p>
-              </p>}
+            </p>}
 
           </div>
 
@@ -330,9 +330,9 @@ const Home = () => {
             boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
           }}>
             <p style={{ color: "grey" }}>↑ Added Today :</p>
-            {spin ? <div style={{textAlign:"center"}}><Spiner2 /> </div>: <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+            {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
               <p>{meta?.metaDataToday}</p>
-              </p>}
+            </p>}
           </div>
 
         </div>}
@@ -360,10 +360,10 @@ const Home = () => {
             {/* gender */}
             <div className="filter_gender col-sm-12 col-md-12 col-lg-3"
               style={{
-                border: "0px solid red", borderRadius: 3, background: "white", padding: 3,
+                border: "0px solid red", borderBottomRightRadius:13, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
               }}>
-              <h6 style={{ color: "red" }} className='text-center'>Filter By Gender</h6>
+              <h6 style={{ color: "black",fontWeight:"bold" }} className='text-center'>Filter By Gender</h6>
               <div className="gender d-flex justify-content-around" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
@@ -417,11 +417,11 @@ const Home = () => {
             {/* sort by status */}
             <div className="filter_status col-sm-12 col-md-12 col-lg-3"
               style={{
-                border: "0px solid red", borderRadius: 3, background: "white", padding: 3,
+                border: "0px solid red", borderBottomLeftRadius:12, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
               }}>
 
-              <h6 style={{ color: "red" }} className='text-center'>Filter By Status</h6>
+              <h6 style={{ color: "black",fontWeight:"bold" }} className='text-center'>Filter By Status</h6>
               <div className="status_radio d-flex justify-content-around flex-wrap gap-1" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
@@ -455,8 +455,11 @@ const Home = () => {
 
             {/* date range */}
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 6, gap: 3, flexWrap: "wrap" }}>
-              <p onClick={() => setFilterByDateRange(!filterByDateRange)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between", height: 39 }}>Filter by Date Range 📅<span>▼</span></p>
-              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "white", color: "black", padding: 3, borderRadius: 3, cursor: "pointer", width: 360, display: "flex", justifyContent: "space-between", height: 39 }}>Filter By More Filters ← ↑ <span>▼</span></p>
+              <p onClick={() => setFilterByDateRange(!filterByDateRange)}
+                style={{ background: "white", color: "black", padding: 3, borderTopLeftRadius: 13, cursor: "pointer", width: 142, display: "flex", justifyContent: "space-between", height: 39, fontWeight: "bold" }}>
+                Date Range 📅<span style={{ color: "brown" }}>▼</span></p>
+              <p onClick={() => setMoreFilter(!moreFilter)} style={{ background: "white", color: "black", padding: 3, borderTopRightRadius: 12, cursor: "pointer", width: 142, display: "flex", justifyContent: "space-between", height: 39, fontWeight: "bold" }}>
+                More Filters ← ↑ <span style={{ color: "brown" }}>▼</span></p>
 
             </div>
 
