@@ -244,7 +244,7 @@ const Home = () => {
         {/* search & add  ends*/}
 
         {/* charts */}
-        <div style={{ display: "flex", justifyContent: "space-between", boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px " }}>
+        <div style={{ display: "flex", justifyContent: "space-between", boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px" }}>
           <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
             <span style={{ color: "white" }}>Charts</span>
             <button onClick={() => setChartsHideShow(!chartsHideShow)}

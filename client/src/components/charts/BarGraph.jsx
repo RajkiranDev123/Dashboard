@@ -114,7 +114,7 @@ function BarGraph() {
             {spin ? <Spiner2 /> : <BarChart
                 dataset={dataSet}
                 yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-                series={[{ dataKey: 'seoul', label: 'Users Added', valueFormatter }]}
+                series={[{ dataKey: 'seoul', label: 'Users Added Monthly', valueFormatter }]}
                 layout="horizontal"
                 {...chartSetting}
             />}
