@@ -267,7 +267,7 @@ const Home = () => {
         {chartsHideShow && <div className="search_add m-2 p-2"
           style={{
             border: "0px outset brown", borderRadius: 4, background: "#C0C0C0",
-            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
+            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(252, 248, 248, 0.3) 0px 8px 16px -8px "
           }}>
           <Suspense fallback={<p style={{ color: "white" }}>wait.....</p>}>
             <BasicBars2 />
@@ -290,8 +290,8 @@ const Home = () => {
           }}>
           {/* total  */}
           <div className='ann' style={{
-            background: "#F5F5DC", padding: 2, borderRadius: 3, width: 180, margin: 1,
-            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
+            background: "white", padding: 2, borderRadius: 3, width: 180, margin: 1,
+          boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
             <p style={{ color: "grey", textAlign: "center" }}>🗑️ Total Users  </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
@@ -302,8 +302,8 @@ const Home = () => {
 
           {/* this month : metaDataMonth */}
           <div className='ann' style={{
-            background: "#F0EAD6", padding: 2, borderRadius: 3,
-            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
+            background: "white", padding: 2, borderRadius: 3,
+          boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
             <p style={{ color: "grey", textAlign: "center" }}>📅 Added this Month  </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
@@ -314,10 +314,10 @@ const Home = () => {
 
           {/* yesterday */}
           <div className='ann' style={{
-            background: "#FCF5E5", padding: 2, borderRadius: 3,
-            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
+            background: "white", padding: 2, borderRadius: 3,
+        boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
-            <p style={{ color: "grey", textAlign: "center" }}>← Added Yesterday :</p>
+            <p style={{ color: "grey", textAlign: "center" }}>← Added Yesterday </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
               <p>{meta?.metaDataYesterday}</p>
             </p>}
@@ -326,10 +326,10 @@ const Home = () => {
 
           {/* today */}
           <div className='ann' style={{
-            background: "#E2DFD2", padding: 2, borderRadius: 3, marginTop: 1,
-            boxShadow: "rgba(110, 12, 55, 0.25) 0px 13px 27px -5px, rgba(227, 214, 214, 0.3) 0px 8px 16px -8px "
+            background: "white", padding: 2, borderRadius: 3, marginTop: 1,
+        boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
-            <p style={{ color: "grey" }}>↑ Added Today :</p>
+            <p style={{ color: "grey" }}>↑ Added Today </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
               <p>{meta?.metaDataToday}</p>
             </p>}
