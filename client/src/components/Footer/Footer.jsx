@@ -5,7 +5,7 @@ const Footer = () => {
     <div style={{display:"flex",justifyContent:"center"}}>
 
         <p style={{color:"white"}}>
-        © 2024 R.K Upadhyay. All rights reserved.
+        © 2025 R.K Upadhyay. All rights reserved.
         </p>
 
     </div>

@@ -236,7 +236,7 @@ const Home = () => {
           {/* search ends*/}
 
           {/* add button*/}
-          <div className="add_btn col-sm-12 col-md-12 col-lg-6 d-flex justify-content-end">
+          <div id="gocharts" className="add_btn col-sm-12 col-md-12 col-lg-6 d-flex justify-content-end">
             <Button variant='primary' onClick={goToRegister} className='add_button'><i className='fa-solid fa-plus'></i>Add User</Button>
           </div>
           {/* add button ends*/}
@@ -278,7 +278,7 @@ const Home = () => {
         {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
         {/* users added details */}
-        <p style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
+        <p id="added" style={{ fontWeight: "bold", display: "flex", gap: 2, marginLeft: 5 }}>
           <span style={{ color: "white" }}>Users Added</span>
           <button onClick={() => setUsersAddedHideShow(!usersAddedHideShow)}
             style={{ border: "none", fontWeight: "bold", background: "grey", color: "white", borderRadius: 4 }}>{usersAddedHideShow ? "▼" : "▲"}</button>
@@ -291,7 +291,7 @@ const Home = () => {
           {/* total  */}
           <div className='ann' style={{
             background: "white", padding: 2, borderRadius: 3, width: 180, margin: 1,
-          boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
+            boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
             <p style={{ color: "grey", textAlign: "center" }}>🗑️ Total Users  </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
@@ -303,7 +303,7 @@ const Home = () => {
           {/* this month : metaDataMonth */}
           <div className='ann' style={{
             background: "white", padding: 2, borderRadius: 3,
-          boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
+            boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
             <p style={{ color: "grey", textAlign: "center" }}>📅 Added this Month  </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
@@ -315,7 +315,7 @@ const Home = () => {
           {/* yesterday */}
           <div className='ann' style={{
             background: "white", padding: 2, borderRadius: 3,
-        boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
+            boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
             <p style={{ color: "grey", textAlign: "center" }}>← Added Yesterday </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
@@ -327,9 +327,9 @@ const Home = () => {
           {/* today */}
           <div className='ann' style={{
             background: "white", padding: 2, borderRadius: 3, marginTop: 1,
-        boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
+            boxShadow: "rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px"
           }}>
-            <p style={{ color: "grey" }}>↑ Added Today </p>
+            <p id="filterss" style={{ color: "grey" }}>↑ Added Today </p>
             {spin ? <div style={{ textAlign: "center" }}><Spiner2 /> </div> : <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
               <p>{meta?.metaDataToday}</p>
             </p>}
@@ -360,10 +360,10 @@ const Home = () => {
             {/* gender */}
             <div className="filter_gender col-sm-12 col-md-12 col-lg-3 ann2"
               style={{
-                border: "0px solid red", borderBottomRightRadius:13, background: "white", padding: 3,
+                border: "0px solid red", borderBottomRightRadius: 13, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
               }}>
-              <h6 style={{ color: "black",fontWeight:"bold" }} className='text-center'>Filter By Gender</h6>
+              <h6 style={{ color: "black", fontWeight: "bold" }} className='text-center'>Filter By Gender</h6>
               <div className="gender d-flex justify-content-around" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
@@ -417,11 +417,11 @@ const Home = () => {
             {/* sort by status */}
             <div className="filter_status col-sm-12 col-md-12 col-lg-3 ann2"
               style={{
-                border: "0px solid red", borderBottomLeftRadius:12, background: "white", padding: 3,
+                border: "0px solid red", borderBottomLeftRadius: 12, background: "white", padding: 3,
                 boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px "
               }}>
 
-              <h6 style={{ color: "black",fontWeight:"bold" }} className='text-center'>Filter By Status</h6>
+              <h6 style={{ color: "black", fontWeight: "bold" }} className='text-center'>Filter By Status</h6>
               <div className="status_radio d-flex justify-content-around flex-wrap gap-1" style={{ color: "brown" }}>
                 <Form.Check
                   type={"radio"}
@@ -510,11 +510,52 @@ const Home = () => {
         />
       }
       {/* table ends*/}
-   <br/>
+      <br />
       {/* footer starts */}
       <div style={{ textAlign: "center" }} >
         <Button style={{ width: 350 }} onClick={exportcsv} variant='danger' className='export_button'>Export To CSV 📑</Button>
       </div>
+
+      {/* nav */}
+
+
+      <div style={{ background: "#D3D3D3", height: "55px", margin: 3, borderRadius: 3 }}>
+        <div>.</div>
+        <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", flexWrap: "wrap", }}>
+          <a style={{ textDecoration: "none", color: "#36454F", fontWeight: "bold" }} href="#gocharts">📈 Charts</a>
+          <a style={{ textDecoration: "none", color: "#36454F", fontWeight: "bold" }} href="#added">👤 Users Added</a>
+          <a style={{ textDecoration: "none", color: "#36454F", fontWeight: "bold" }} href="#filterss">⌛ Filtering & Sorting</a>
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* nav */}
+
+
+
+
+
+
+
+
+
       <Footer />
 
     </div>
